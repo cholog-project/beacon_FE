@@ -1,0 +1,108 @@
+/* 전체 Task 목록 컨테이너 */
+.task-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    background-color: #f5f5f5;
+    border-right: 2px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Task 헤더 */
+.task-header {
+    display: flex;
+    width: 100%;
+    background-color: #d9d9d9;
+    padding: 10px;
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Task 한 행의 스타일 */
+.task-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #e5e8eb;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* Task 줄 간의 간격 및 여백 추가 */
+.task-row div {
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 추가 버튼 */
+.add-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+/* 삭제 버튼 */
+.delete-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Dropdown 버튼 */
+.dropdown-button {
+    background-color: #77A5FF;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Dropdown이 열렸을 때의 Plan 정보 */
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Plan 섹션 */
+.plan-section {
+    background-color: #8CBBF2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Do 섹션 */
+.do-section {
+    background-color: #d9d9d9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Do 레코드 한 줄 */
+.do-row {
+    display: flex;
+    justify-content: space-between;
+    background-color: #c5d4dd;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
