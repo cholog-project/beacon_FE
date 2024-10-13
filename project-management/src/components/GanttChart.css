@@ -1,25 +1,25 @@
-/* src/components/GanttChart.css */
-
 /* 전체 틀 */
 .gantt-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex-shrink: 0;
-    width: 100%; /* 전체 너비 */
+    width: calc(100% - 20px); /* TaskList와의 여백을 위해 너비 조정 */
+    margin-left: 10px; /* TaskList와의 간격 추가 */
     height: auto;
 }
 
+/* 날짜 표시 칸 */
 .gantt-header {
     display: flex;
 }
 
-/* 날짜 표시 칸 */
 .gantt-day {
     width: 30px; /* 각 날짜 칸 너비 */
     flex-shrink: 0;
     text-align: center;
     border-right: 1px solid #ddd;
+    background-color: white; /* 경계 문제 해결을 위한 배경색 */
 }
 
 /* 각 Task의 Plan 영역 */
@@ -47,7 +47,7 @@
     position: relative;
 }
 
-/*  Do 표시 */
+/* Do 표시 */
 .gantt-do {
     position: absolute;
     top: 0;
