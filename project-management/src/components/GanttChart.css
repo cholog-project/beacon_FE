@@ -1,0 +1,43 @@
+/* src/components/GanttChart.css */
+.gantt-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.gantt-header {
+    display: flex;
+}
+
+.gantt-day {
+    width: 30px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.gantt-task-row {
+    position: relative;
+    display: flex;
+    margin-top: 10px;
+}
+
+.gantt-task {
+    height: 30px;
+    background-color: #8884d8;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    font-weight: bold;
+    position: relative;
+}
+
+/* 분홍색 Do 표시 */
+.gantt-do {
+    position: absolute;
+    top: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #ff69b4;
+    border-radius: 5px;
+}
