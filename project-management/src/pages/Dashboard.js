@@ -14,9 +14,9 @@ const Dashboard = () => {
             planStartDate: '2024-10-02',
             planEndDate: '2024-10-12',
             doRecords: [
-                { date: '2024-10-02', status: 'start' },
-                { date: '2024-10-05', status: 'in-progress' },
-                { date: '2024-10-08', status: 'complete' },
+                { date: '2024-10-02', status: 'start' ,description:'시작이다'},
+                { date: '2024-10-05', status: 'in-progress' ,description:'진행이다'},
+                { date: '2024-10-08', status: 'complete' ,description:'종료다'},
             ],
         },
         {
