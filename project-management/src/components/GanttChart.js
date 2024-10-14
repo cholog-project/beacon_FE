@@ -31,7 +31,7 @@ const GanttChart = ({ tasks }) => {
                     <div key={task.id} className="gantt-task-row">
                         {/* 파란색 막대: 계획된 기간 */}
                         <div
-                            className="gantt-task"
+                            className={`gantt-task ${task.assignee === '김수현' ? 'kimsoo' : task.assignee === '이준호' ? 'leejoonho' : ''}`}
                             style={{
                                 marginLeft: `${startDay * 30}px`,
                                 width: `${taskDuration * 30}px`,
@@ -42,16 +42,20 @@ const GanttChart = ({ tasks }) => {
 
                         {/* 분홍색 막대: Do 날짜들 */}
                         {task.doRecords.map((doRecord, index) => {
-                            const doDay = new Date(doRecord.date).getDate(); // Do 날짜의 일수
+                            const doDay = new Date(doRecord.date).getDate();
+                            const doClass = task.assignee === '김수현' ? 'kimsoo-do' : task.assignee === '이준호' ? 'leejoonho-do' : '';
+
                             return (
                                 <div
                                     key={index}
-                                    className="gantt-do"
+                                    className={`gantt-do ${doClass}`}
                                     style={{
                                         marginLeft: `${doDay * 30}px`,
                                     }}
-                                    title={`${doRecord.status} on ${doRecord.date}`} // 상태와 날짜를 툴팁으로 표시
-                                ></div>
+                                    title={`${doRecord.status} on ${doRecord.date}`}
+                                >
+                                    {/* Do 내용 */}
+                                </div>
                             );
                         })}
                     </div>

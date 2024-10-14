@@ -1,0 +1,19 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: row; /* 가로로 배치 */
+    height: 100vh; /* 전체 화면 높이 */
+}
+
+.task-list-container {
+    width: 40%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.gantt-chart-container {
+    width: 60%;
+    padding: 10px;
+    background-color: #e0e0e0;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}

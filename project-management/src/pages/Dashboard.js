@@ -18,6 +18,7 @@ const Dashboard = () => {
                 { id: 2, date: '2024-10-05', status: 'in-progress', description: '진행이다' },
                 { id: 3, date: '2024-10-08', status: 'complete', description: '종료다' },
             ],
+            color: 'blue'
         },
         {
             id: 2,
@@ -31,6 +32,7 @@ const Dashboard = () => {
                 { id: 1, date: '2024-10-06', status: 'start' },
                 { id: 2, date: '2024-10-09', status: 'in-progress' },
             ],
+            color: 'green'
         },
     ]);
 
