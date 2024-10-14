@@ -37,7 +37,7 @@ const GanttChart = ({ tasks }) => {
                                 width: `${taskDuration * 30}px`,
                             }}
                         >
-                            {task.title}
+                            {/*{task.title}*/}
                         </div>
 
                         {/* 분홍색 막대: Do 날짜들 */}

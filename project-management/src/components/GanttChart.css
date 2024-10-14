@@ -1,43 +1,65 @@
-/* src/components/GanttChart.css */
+/* 전체 틀 */
 .gantt-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: flex-start;
+    flex-shrink: 0;
+    width: calc(100% - 20px); /* TaskList와의 여백을 위해 너비 조정 */
+    margin-left: 10px; /* TaskList와의 간격 추가 */
+    height: auto;
 }
 
+/* 날짜 표시 칸 */
 .gantt-header {
     display: flex;
 }
 
 .gantt-day {
-    width: 30px;
+    width: 30px; /* 각 날짜 칸 너비 */
+    flex-shrink: 0;
     text-align: center;
     border-right: 1px solid #ddd;
+    background-color: white; /* 경계 문제 해결을 위한 배경색 */
 }
 
+/* 각 Task의 Plan 영역 */
 .gantt-task-row {
     position: relative;
     display: flex;
     margin-top: 10px;
+    align-items: center;
 }
 
+/* Plan 막대 */
 .gantt-task {
-    height: 30px;
-    background-color: #8884d8;
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 30px; /* plan과 do의 높이를 일치 */
+    background-color: rgba(140, 187, 242, 0.8);
     border-radius: 5px;
     text-align: center;
     color: white;
-    line-height: 30px;
-    font-weight: bold;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
     position: relative;
 }
 
-/* 분홍색 Do 표시 */
+/* Do 표시 */
 .gantt-do {
     position: absolute;
     top: 0;
-    height: 30px;
-    width: 30px;
-    background-color: #ff69b4;
+    height: 30px; /* 높이를 plan과 동일하게 설정 */
+    width: 30px; /* 날짜 칸 하나에 맞춤 */
+    background-color: #77A5FF;
     border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 30px;
+    flex-shrink: 0;
 }
