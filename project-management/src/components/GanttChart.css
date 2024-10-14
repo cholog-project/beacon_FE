@@ -7,11 +7,15 @@
     width: calc(100% - 20px); /* TaskList와의 여백을 위해 너비 조정 */
     margin-left: 10px; /* TaskList와의 간격 추가 */
     height: auto;
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤이 생기도록 */
 }
 
 /* 날짜 표시 칸 */
 .gantt-header {
     display: flex;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .gantt-day {
@@ -20,6 +24,13 @@
     text-align: center;
     border-right: 1px solid #ddd;
     background-color: white; /* 경계 문제 해결을 위한 배경색 */
+    padding: 5px;
+}
+
+.gantt-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 /* 각 Task의 Plan 영역 */
@@ -45,6 +56,7 @@
     font-weight: 700;
     line-height: 22px;
     position: relative;
+    flex-shrink: 0;
 }
 
 /* Do 표시 */
@@ -53,7 +65,7 @@
     top: 0;
     height: 30px; /* 높이를 plan과 동일하게 설정 */
     width: 30px; /* 날짜 칸 하나에 맞춤 */
-    background-color: #77A5FF;
+    background-color: black;
     border-radius: 5px;
     color: white;
     text-align: center;
@@ -62,4 +74,24 @@
     font-weight: 700;
     line-height: 30px;
     flex-shrink: 0;
+}
+
+/* 김수현의 Plan */
+.kimsoo {
+    background-color: rgba(255, 99, 132, 0.8); /* 원하는 색상 */
+}
+
+/* 이준호의 Plan */
+.leejoonho {
+    background-color: rgba(75, 192, 192, 0.8); /* 원하는 색상 */
+}
+
+/* 김수현의 Do 표시 */
+.kimsoo-do {
+    background-color: red; /* 원하는 색상 */
+}
+
+/* 이준호의 Do 표시 */
+.leejoonho-do {
+    background-color: green; /* 원하는 색상 */
 }
