@@ -8,7 +8,7 @@ const Dashboard = () => {
         {
             id: 1,
             title: 'Task 1',
-            assignee: '김수현',
+            assignee: '김도연',
             taskStartDate: '2024-10-01',
             taskEndDate: '2024-10-15',
             planStartDate: '2024-10-02',
@@ -18,12 +18,12 @@ const Dashboard = () => {
                 { id: 2, date: '2024-10-05', status: 'in-progress', description: '진행이다' },
                 { id: 3, date: '2024-10-08', status: 'complete', description: '종료다' },
             ],
-            color: 'blue'
+            //color: 'blue'
         },
         {
             id: 2,
             title: 'Task 2',
-            assignee: '이준호',
+            assignee: '김성재',
             taskStartDate: '2024-10-05',
             taskEndDate: '2024-10-20',
             planStartDate: '2024-10-06',
@@ -32,7 +32,35 @@ const Dashboard = () => {
                 { id: 1, date: '2024-10-06', status: 'start' },
                 { id: 2, date: '2024-10-09', status: 'in-progress' },
             ],
-            color: 'green'
+            //color: 'green'
+        },
+        {
+            id: 3,
+            title: 'Task 3',
+            assignee: '김수현',
+            taskStartDate: '2024-10-05',
+            taskEndDate: '2024-10-20',
+            planStartDate: '2024-10-06',
+            planEndDate: '2024-10-15',
+            doRecords: [
+                { id: 1, date: '2024-10-06', status: 'start' },
+                { id: 2, date: '2024-10-09', status: 'in-progress' },
+            ],
+            //color: 'green'
+        },
+        {
+            id: 4,
+            title: 'Task 4',
+            assignee: '허준기',
+            taskStartDate: '2024-10-05',
+            taskEndDate: '2024-10-20',
+            planStartDate: '2024-10-06',
+            planEndDate: '2024-10-15',
+            doRecords: [
+                { id: 1, date: '2024-10-06', status: 'start' },
+                { id: 2, date: '2024-10-09', status: 'in-progress' },
+            ],
+            //color: 'green'
         },
     ]);
 

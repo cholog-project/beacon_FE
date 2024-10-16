@@ -48,6 +48,7 @@
     width: auto;
     height: 30px; /* plan과 do의 높이를 일치 */
     background-color: rgba(140, 187, 242, 0.8);
+    opacity: 0.3; /* 50% 투명 */
     border-radius: 5px;
     text-align: center;
     color: white;
@@ -76,22 +77,46 @@
     flex-shrink: 0;
 }
 
-/* 김수현의 Plan */
-.kimsoo {
-    background-color: rgba(255, 99, 132, 0.8); /* 원하는 색상 */
+/* 김도연의 Plan */
+.first {
+    background-color: red;
+    opacity: 0.3;
 }
 
-/* 이준호의 Plan */
-.leejoonho {
-    background-color: rgba(75, 192, 192, 0.8); /* 원하는 색상 */
+/* 김도연의 Do 표시 */
+.first-do {
+    background-color: red;
+}
+
+/* 김성재의 Plan */
+.second {
+    background-color: green;
+    opacity: 0.3;
+}
+
+/* 김성재의 Do 표시 */
+.second-do {
+    background-color: green;
+}
+
+/* 김수현의 Plan */
+.third {
+    background-color: rebeccapurple;
+    opacity: 0.3;
 }
 
 /* 김수현의 Do 표시 */
-.kimsoo-do {
-    background-color: red; /* 원하는 색상 */
+.third-do {
+    background-color: rebeccapurple;
 }
 
-/* 이준호의 Do 표시 */
-.leejoonho-do {
-    background-color: green; /* 원하는 색상 */
+/* 허준기의 Plan */
+.fourth {
+    background-color: rgba(255, 204, 0);
+    opacity: 0.3;
+}
+
+/* 허준기 Do 표시 */
+.fourth-do {
+    background-color: rgba(255, 204, 0);
 }

@@ -31,7 +31,8 @@ const GanttChart = ({ tasks }) => {
                     <div key={task.id} className="gantt-task-row">
                         {/* 파란색 막대: 계획된 기간 */}
                         <div
-                            className={`gantt-task ${task.assignee === '김수현' ? 'kimsoo' : task.assignee === '이준호' ? 'leejoonho' : ''}`}
+                            className={`gantt-task ${task.assignee === '김도연' ? 'first' : task.assignee === '김성재' ? 'second' : 
+                                                    task.assignee === '김수현' ? 'third' : task.assignee === '허준기' ? 'fourth' :''}`}
                             style={{
                                 marginLeft: `${startDay * 30}px`,
                                 width: `${taskDuration * 30}px`,
@@ -43,7 +44,8 @@ const GanttChart = ({ tasks }) => {
                         {/* 분홍색 막대: Do 날짜들 */}
                         {task.doRecords.map((doRecord, index) => {
                             const doDay = new Date(doRecord.date).getDate();
-                            const doClass = task.assignee === '김수현' ? 'kimsoo-do' : task.assignee === '이준호' ? 'leejoonho-do' : '';
+                            const doClass = task.assignee === '김도연' ? 'first-do' : task.assignee === '김성재' ? 'second-do' :
+                                                    task.assignee === '김수현' ? 'third-do' : task.assignee === '허준기' ? 'fourth-do' : '';
 
                             return (
                                 <div
