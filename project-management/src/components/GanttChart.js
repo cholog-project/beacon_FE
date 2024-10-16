@@ -34,8 +34,8 @@ const GanttChart = ({ tasks }) => {
                             className={`gantt-task ${task.assignee === '김도연' ? 'first' : task.assignee === '김성재' ? 'second' : 
                                                     task.assignee === '김수현' ? 'third' : task.assignee === '허준기' ? 'fourth' :''}`}
                             style={{
-                                marginLeft: `${startDay * 30}px`,
-                                width: `${taskDuration * 30}px`,
+                                marginLeft: `${(startDay-1) * 40 + 30}px`,
+                                width: `${(taskDuration-1) * 47 + 40}px`,
                             }}
                         >
                             {/*{task.title}*/}
@@ -52,7 +52,7 @@ const GanttChart = ({ tasks }) => {
                                     key={index}
                                     className={`gantt-do ${doClass}`}
                                     style={{
-                                        marginLeft: `${doDay * 30}px`,
+                                        marginLeft: `${(doDay-1) * 30 + 30}px`,
                                     }}
                                     title={`${doRecord.status} on ${doRecord.date}`}
                                 >
