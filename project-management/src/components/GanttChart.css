@@ -5,7 +5,6 @@
     align-items: flex-start;
     flex-shrink: 0;
     width: calc(100% - 20px); /* TaskList와의 여백을 위해 너비 조정 */
-    margin-left: 10px; /* TaskList와의 간격 추가 */
     height: auto;
     overflow-x: auto; /* 가로 스크롤 활성화 */
     overflow-y: auto; /* 내용이 넘칠 경우 스크롤이 생기도록 */
@@ -16,6 +15,7 @@
     display: flex;
     font-weight: bold;
     margin-bottom: 10px;
+    margin-left: 20px;
 }
 
 .gantt-day {
@@ -64,8 +64,9 @@
 .gantt-do {
     position: absolute;
     top: 0;
+    left: 0; /* Plan과 동일한 위치에서 시작 */
     height: 30px; /* 높이를 plan과 동일하게 설정 */
-    width: 30px; /* 날짜 칸 하나에 맞춤 */
+    width: 37px; /* 날짜 칸 하나에 맞춤 */
     background-color: black;
     border-radius: 5px;
     color: white;

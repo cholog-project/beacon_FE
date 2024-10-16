@@ -10,13 +10,13 @@ const Dashboard = () => {
             title: 'Task 1',
             assignee: '김도연',
             taskStartDate: '2024-10-01',
-            taskEndDate: '2024-10-15',
-            planStartDate: '2024-10-02',
-            planEndDate: '2024-10-12',
+            taskEndDate: '2024-10-06',
+            planStartDate: '2024-10-01',
+            planEndDate: '2024-10-06',
             doRecords: [
-                { id: 1, date: '2024-10-02', status: 'start', description: '시작이다' },
+                { id: 1, date: '2024-10-01', status: 'start', description: '시작이다' },
                 { id: 2, date: '2024-10-05', status: 'in-progress', description: '진행이다' },
-                { id: 3, date: '2024-10-08', status: 'complete', description: '종료다' },
+                { id: 3, date: '2024-10-06', status: 'complete', description: '종료다' },
             ],
             //color: 'blue'
         },
@@ -25,9 +25,9 @@ const Dashboard = () => {
             title: 'Task 2',
             assignee: '김성재',
             taskStartDate: '2024-10-05',
-            taskEndDate: '2024-10-20',
-            planStartDate: '2024-10-06',
-            planEndDate: '2024-10-15',
+            taskEndDate: '2024-10-14',
+            planStartDate: '2024-10-05',
+            planEndDate: '2024-10-14',
             doRecords: [
                 { id: 1, date: '2024-10-06', status: 'start' },
                 { id: 2, date: '2024-10-09', status: 'in-progress' },
@@ -39,9 +39,9 @@ const Dashboard = () => {
             title: 'Task 3',
             assignee: '김수현',
             taskStartDate: '2024-10-05',
-            taskEndDate: '2024-10-20',
-            planStartDate: '2024-10-06',
-            planEndDate: '2024-10-15',
+            taskEndDate: '2024-10-14',
+            planStartDate: '2024-10-05',
+            planEndDate: '2024-10-14',
             doRecords: [
                 { id: 1, date: '2024-10-06', status: 'start' },
                 { id: 2, date: '2024-10-09', status: 'in-progress' },
@@ -53,9 +53,9 @@ const Dashboard = () => {
             title: 'Task 4',
             assignee: '허준기',
             taskStartDate: '2024-10-05',
-            taskEndDate: '2024-10-20',
-            planStartDate: '2024-10-06',
-            planEndDate: '2024-10-15',
+            taskEndDate: '2024-10-14',
+            planStartDate: '2024-10-05',
+            planEndDate: '2024-10-14',
             doRecords: [
                 { id: 1, date: '2024-10-06', status: 'start' },
                 { id: 2, date: '2024-10-09', status: 'in-progress' },
@@ -70,10 +70,10 @@ const Dashboard = () => {
             id: tasks.length + 1,
             title: `Task ${tasks.length + 1}`,
             assignee: '새로운 사람',
-            taskStartDate: '2024-10-10',
-            taskEndDate: '2024-10-20',
-            planStartDate: '2024-10-11',
-            planEndDate: '2024-10-19',
+            taskStartDate: '2024-10-07',
+            taskEndDate: '2024-10-16',
+            planStartDate: '2024-10-07',
+            planEndDate: '2024-10-16',
             doRecords: [],
         };
         setTasks([...tasks, newTask]);
@@ -90,7 +90,7 @@ const Dashboard = () => {
             if (task.id === taskId) {
                 const newDoRecord = {
                     id: task.doRecords.length + 1,
-                    date: '2024-10-10',
+                    date: '2024-10-11',
                     status: 'new',
                     description: '새로운 Do 기록'
                 };
