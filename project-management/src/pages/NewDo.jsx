@@ -12,7 +12,6 @@ import { useState } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import React from "react";
 
-
 const statusOptions = [
     {
         value: "Not Started",
@@ -81,7 +80,7 @@ function NewDo() {
             <Box
                 component="form"
                 sx={{
-                    "& .MuiTextField-root": { m: 1, width: "100%", textAlign: "left" },
+                    "& .MuiTextField-root": { m: 1, width: "100%"},
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center", // 폼 내부 항목 중앙 정렬
@@ -101,11 +100,10 @@ function NewDo() {
                     <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>New Do</h1>
                 </div>
 
-                <div style={{ width: "100%" }}>
                     <TextField
                         id="select-status"
                         select
-                        label="status"
+                        label="Status"
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
                         fullWidth
@@ -117,41 +115,29 @@ function NewDo() {
                             </MenuItem>
                         ))}
                     </TextField>
-                </div>
 
-                <div
-                    style={{
-                        width: "100%",
-                        marginBottom: "16px",
-                        position: "relative",
-                        left: "8px",
-                    }}
-                >
+                <Box sx={{ width: "100%", marginBottom: "16px" }}>
                     <FormControl fullWidth>
                         <InputLabel htmlFor="component-outlined">Description</InputLabel>
                         <OutlinedInput
                             id="component-outlined"
+                            multiline
+                            rows={6}
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             label="Description"
                             fullWidth
                         />
                     </FormControl>
-                </div>
+                </Box>
 
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "100%",
-                    }}
-                >
+                <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                     <Button
                         variant="contained"
                         sx={{ width: "48%", backgroundColor: "#007bff", color: "#fff" }}
                         onClick={handleSubmit}
                     >
-                        Save
+                        Create
                     </Button>
                     <Button
                         variant="outlined"
@@ -160,7 +146,7 @@ function NewDo() {
                     >
                         Close
                     </Button>
-                </div>
+                </Box>
             </Box>
         </div>
     );
