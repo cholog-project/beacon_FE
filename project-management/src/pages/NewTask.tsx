@@ -8,8 +8,9 @@ import {
   TextField,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "../constant/index.tsx";
+import { TeamMember } from '../types/team';
 import React from "react";
 
 const type = [
@@ -47,10 +48,23 @@ function NewTask() {
   const [endDate, setEndDate] = useState("");
   const [selectedMember, setSelectedMember] = useState("");
   const [projectId, setProjectId] = useState("1"); // projectId는 일단 1로 설정
-  const [teamMembers, setTeamMembers] = useState([
-    { id: "25", name: "Team Member 1" },
-  ]); // API에서 받아온 팀 멤버
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]); // 타입 적용 및 함수 내부로 이동
 
+  useEffect(() => {
+    async function fetchTeamMembers() {
+      try {
+        const response = await fetch(`${BASE_URL}/projects/${projectId}/members`);
+        if (!response.ok) throw new Error('Failed to fetch team members');
+        const data = await response.json();
+        setTeamMembers(data.projectMembers); // 팀 멤버 정보를 상태로 저장
+      } catch (error) {
+        console.error('Failed to fetch team members:', error);
+      }
+    }
+  
+    fetchTeamMembers();
+  }, [projectId]);
+  
   // API 요청 함수
   const handleSubmit = async () => {
     const taskData = {
@@ -173,7 +187,7 @@ function NewTask() {
               <em>Select a team member</em>
             </MenuItem>
             {teamMembers.map((member) => (
-              <MenuItem key={member.id} value={member.id}>
+              <MenuItem key={member.memberId} value={member.memberId}>
                 {member.name}
               </MenuItem>
             ))}
