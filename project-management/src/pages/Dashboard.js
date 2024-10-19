@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import TaskList from '../components/TaskList';
 import GanttChart from '../components/GanttChart';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([
         {
             id: 1,
@@ -110,15 +112,33 @@ const Dashboard = () => {
         }));
     };
 
+    // return (
+    //     <div style={{ display: 'flex' }}>
+    //         <div style={{ width: '40%' }}>
+    //             <TaskList
+    //                 tasks={tasks}
+    //                 onAddTask={addTask}
+    //                 onDeleteTask={deleteTask}
+    //                 onAddDoRecord={addDoRecord}
+    //                 onDeleteDoRecord={deleteDoRecord}
+    //             />
+    //         </div>
+    //         <div style={{ width: '60%' }}>
+    //             <GanttChart tasks={tasks} />
+    //         </div>
+    //     </div>
+    // );
+
+    const handleAddTaskClick = () => {
+        navigate('/newTask'); // 'newTask' 페이지로 이동
+    };
+
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
                 <TaskList
                     tasks={tasks}
-                    onAddTask={addTask}
-                    onDeleteTask={deleteTask}
-                    onAddDoRecord={addDoRecord}
-                    onDeleteDoRecord={deleteDoRecord}
+                    onAddTaskClick={handleAddTaskClick} // 클릭 이벤트 핸들러 연결
                 />
             </div>
             <div style={{ width: '60%' }}>
