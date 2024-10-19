@@ -112,25 +112,12 @@ const Dashboard = () => {
         }));
     };
 
-    // return (
-    //     <div style={{ display: 'flex' }}>
-    //         <div style={{ width: '40%' }}>
-    //             <TaskList
-    //                 tasks={tasks}
-    //                 onAddTask={addTask}
-    //                 onDeleteTask={deleteTask}
-    //                 onAddDoRecord={addDoRecord}
-    //                 onDeleteDoRecord={deleteDoRecord}
-    //             />
-    //         </div>
-    //         <div style={{ width: '60%' }}>
-    //             <GanttChart tasks={tasks} />
-    //         </div>
-    //     </div>
-    // );
-
     const handleAddTaskClick = () => {
-        navigate('/newTask'); // 'newTask' 페이지로 이동
+        navigate('/newTask'); // Navigate to 'newTask' page
+    };
+
+    const handleAddDoClick = () => {
+        navigate('/newDo'); // Navigate to 'newDo' page
     };
 
     return (
@@ -138,7 +125,8 @@ const Dashboard = () => {
             <div style={{ width: '40%' }}>
                 <TaskList
                     tasks={tasks}
-                    onAddTaskClick={handleAddTaskClick} // 클릭 이벤트 핸들러 연결
+                    onAddTaskClick={handleAddTaskClick} // Pass event handler for adding tasks
+                    onAddDoClick={handleAddDoClick}    // Pass event handler for adding DO records
                 />
             </div>
             <div style={{ width: '60%' }}>

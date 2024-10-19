@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './TaskList.css';
 
-const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRecord, onAddTaskClick }) => {
+const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRecord, onAddTaskClick, onAddDoClick }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     const toggleDropdown = (taskId) => {
@@ -56,7 +56,7 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRec
                                         <div>{doRecord.description}</div>
                                     </div>
                                 ))}
-                                <button className="add-button" onClick={() => onAddDoRecord(task.id)}>+ Do 추가</button> {/* Do 추가 버튼 */}
+                                <button className="add-button" onClick={onAddDoClick}>+ Do 추가</button>
                             </div>
                         </div>
                     )}
