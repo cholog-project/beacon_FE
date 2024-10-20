@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import { TeamMember } from '../types/team';
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 const type = [
   {
@@ -49,6 +50,7 @@ function NewTask() {
   const [selectedMember, setSelectedMember] = useState("");
   const [projectId, setProjectId] = useState("1"); // projectId는 일단 1로 설정
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]); // 타입 적용 및 함수 내부로 이동
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTeamMembers() {
@@ -257,7 +259,7 @@ function NewTask() {
           <Button
             variant="outlined"
             sx={{ width: "48%" }}
-            onClick={() => console.log("Close clicked")}
+            onClick={() => navigate('/')}
           >
             Close
           </Button>
