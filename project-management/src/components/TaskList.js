@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './TaskList.css';
 
-const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRecord }) => {
+const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRecord, onAddTaskClick, onAddDoClick }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     const toggleDropdown = (taskId) => {
@@ -19,7 +19,7 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRec
                 <div>Description</div>
                 <div>Created</div>
                 <div>Updated</div>
-                <button className="add-button" onClick={onAddTask}>+ Task 추가</button> {/* Task 추가 버튼 */}
+                <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button> {/* 수정된 이벤트 핸들러 사용 */}
             </div>
 
             {tasks.map((task) => (
@@ -56,7 +56,7 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRec
                                         <div>{doRecord.description}</div>
                                     </div>
                                 ))}
-                                <button className="add-button" onClick={() => onAddDoRecord(task.id)}>+ Do 추가</button> {/* Do 추가 버튼 */}
+                                <button className="add-button" onClick={onAddDoClick}>+ Do 추가</button>
                             </div>
                         </div>
                     )}

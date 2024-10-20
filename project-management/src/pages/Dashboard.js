@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import TaskList from '../components/TaskList';
 import GanttChart from '../components/GanttChart';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState([
         {
             id: 1,
@@ -110,15 +112,21 @@ const Dashboard = () => {
         }));
     };
 
+    const handleAddTaskClick = () => {
+        navigate('/newTask'); // Navigate to 'newTask' page
+    };
+
+    const handleAddDoClick = () => {
+        navigate('/newDo'); // Navigate to 'newDo' page
+    };
+
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
                 <TaskList
                     tasks={tasks}
-                    onAddTask={addTask}
-                    onDeleteTask={deleteTask}
-                    onAddDoRecord={addDoRecord}
-                    onDeleteDoRecord={deleteDoRecord}
+                    onAddTaskClick={handleAddTaskClick} // Pass event handler for adding tasks
+                    onAddDoClick={handleAddDoClick}    // Pass event handler for adding DO records
                 />
             </div>
             <div style={{ width: '60%' }}>
