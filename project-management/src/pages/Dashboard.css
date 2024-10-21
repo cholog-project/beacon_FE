@@ -1,19 +1,29 @@
 .dashboard-container {
     display: flex;
-    flex-direction: row; /* 가로로 배치 */
+    flex-direction: row;
+    align-items: flex-start;
     height: 100vh; /* 전체 화면 높이 */
+    gap: 0; /* 두 컴포넌트 사이의 간격을 없애 수평 정렬을 맞춤 */
+    padding: 0; /* 페이지 좌우 여백 제거 */
 }
 
+/* Task List 컨테이너 스타일 */
 .task-list-container {
     width: 40%;
-    padding: 10px;
+    margin: 0;
+    padding: 0;
     background-color: #f0f0f0;
-    white-space: nowrap; /* 줄바꿈 방지 */
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc; /* TaskList와 GanttChart를 시각적으로 구분하기 위한 경계선 추가 */
 }
 
+/* Gantt Chart 컨테이너 스타일 */
 .gantt-chart-container {
     width: 60%;
-    padding: 10px;
+    margin: 0;
+    padding: 0;
     background-color: #e0e0e0;
-    white-space: nowrap; /* 줄바꿈 방지 */
+    white-space: nowrap;
+    box-sizing: border-box;
 }

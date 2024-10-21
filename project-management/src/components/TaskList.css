@@ -7,8 +7,8 @@
     background-color: #f5f5f5;
     border-right: 2px solid #ccc;
     box-sizing: border-box;
-    overflow-x: auto; /* 가로 스크롤 활성화 */
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤이 생기도록 */
+    overflow-x: hidden; /* 가로 스크롤 없애기 */
+    overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤이 생기도록 */
 }
 
 /* Task 헤더 */
@@ -16,12 +16,12 @@
     display: flex;
     width: 100%;
     background-color: #d9d9d9;
-    padding: 10px;
+    padding: 15px 10px 15px 40px; /* 왼쪽 여백 추가하여 x 버튼 공간 확보 */
     font-weight: bold;
-    justify-content: space-between;
     align-items: center;
-    font-size: 14px;
     box-sizing: border-box;
+    border-bottom: 1px solid #ccc;
+    height: 50px; /* 높이 통일 */
 }
 
 /* Task 한 행의 스타일 */
@@ -30,81 +30,127 @@
     align-items: center;
     width: 100%;
     background-color: #e5e8eb;
-    padding: 10px;
+    padding: 10px 10px 10px 40px; /* 왼쪽 여백 추가하여 x 버튼 공간 확보 */
     border-top: 1px solid #ccc;
-    justify-content: space-between;
     box-sizing: border-box;
+    position: relative;
+    height: 60px; /* 높이 통일 */
 }
 
-/* Task 줄 간의 간격 및 여백 추가 */
-.task-row div {
-    padding: 0 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+/* 삭제 버튼 기본적으로 숨김 */
+.task-row .delete-button {
+    display: none;
+    position: absolute; /* 버튼 위치 고정 */
+    left: 10px; /* 왼쪽 여백 설정 */
+    top: 50%; /* 수직 가운데 정렬 */
+    transform: translateY(-50%); /* 수직 가운데 정렬 보정 */
 }
 
-/* 추가 버튼 */
-.add-button {
+/* Task 한 행에 마우스를 올렸을 때 삭제 버튼 표시 */
+.task-row:hover .delete-button {
+    display: inline-block; /* 마우스를 올리면 삭제 버튼 표시 */
+}
+/* 각 Task 항목의 공통 스타일 */
+.task-row div,
+.task-header div {
+    padding: 0 5px;
+    white-space: nowrap; /* 내용이 한 줄로 표시되도록 설정 */
+    overflow: hidden; /* 넘치는 내용은 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    text-align: center; /* 가운데 정렬 */
+}
+
+/* 각 Task 항목의 너비 설정 */
+.task-id {
+    flex: 0 1 5%; /* ID 열 너비를 작게 설정 */
+}
+
+.task-title {
+    flex: 1 1 20%; /* Title 열 너비 설정 */
+}
+
+.task-assignee {
+    flex: 1 1 15%; /* Assignee 열 너비 설정 */
+}
+
+.task-dates {
+    flex: 1 1 25%; /* Start - End 날짜 열 너비 설정 */
+}
+
+.task-description {
+    flex: 1 1 20%; /* Description 열 너비 설정 */
+}
+
+.task-created,
+.task-updated {
+    flex: 1 1 10%; /* Created 및 Updated 열 너비 설정 */
+}
+
+/* 추가 버튼 및 삭제 버튼 */
+.add-button, .delete-button, .dropdown-button {
     background-color: #4caf50;
     color: white;
     border: none;
-    padding: 5px;
     cursor: pointer;
     border-radius: 5px;
     margin-left: 5px;
 }
 
-/* 삭제 버튼 */
 .delete-button {
     background-color: #ff6b6b;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
 }
 
-/* Dropdown 버튼 */
 .dropdown-button {
     background-color: #77A5FF;
-    color: white;
-    border: none;
     padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
 }
 
-/* Dropdown이 열렸을 때의 Plan 정보 */
+/* Dropdown content 전체 섹션 */
 .dropdown-content {
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f5f5;
-    padding: 10px;
-    margin-bottom: 10px;
+    background-color: #e0e0e0; /* 진한 회색으로 전체 박스 채우기 */
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 진한 그림자 추가로 구분 */
 }
 
-/* Plan 섹션 */
+/* PLAN 섹션 */
 .plan-section {
-    background-color: #8CBBF2;
-    padding: 10px;
+    background-color: #b3d9ff; /* 진한 파란색으로 PLAN 섹션 전체 배경 채우기 */
+    padding: 15px;
     margin-bottom: 10px;
     border-radius: 5px;
+    border: 1px solid #0073e6; /* 구분을 위한 진한 파란색 경계선 추가 */
 }
 
-/* Do 섹션 */
+/* DO 섹션 */
 .do-section {
-    background-color: #d9d9d9;
-    padding: 10px;
+    background-color: #ffb3b3; /* 진한 빨간색으로 DO 섹션 전체 배경 채우기 */
+    padding: 15px;
     border-radius: 5px;
+    border: 1px solid #cc0000; /* 구분을 위한 진한 빨간색 경계선 추가 */
+    margin-bottom: 10px;
 }
 
-/* Do 레코드 한 줄 */
+/* DO 레코드 한 줄 */
 .do-row {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    background-color: #c5d4dd;
-    padding: 5px;
+    background-color: #d9d9d9; /* 진한 회색으로 레코드 줄의 배경색 설정 */
+    padding: 10px;
     margin-bottom: 5px;
     border-radius: 3px;
+    border: 1px solid #bbb; /* 구분을 위한 경계선 */
+}
+
+/* 추가 버튼 스타일 */
+.add-button {
+    background-color: #388e3c; /* 더 진한 녹색으로 버튼 색상 설정 */
+    color: white;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* 진한 그림자 추가 */
 }
