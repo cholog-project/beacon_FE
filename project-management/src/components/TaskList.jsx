@@ -57,8 +57,9 @@ const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick }) => {
                                         <div>{doRecord.description}</div>
                                     </div>
                                 ))}
-                                <button className="add-button" onClick={onAddDoClick}>+ Do 추가</button>
+                                <button className="add-button" onClick={()=>onAddDoClick(task.id)}>+ Do 추가</button>
                             </div>
+
                         </div>
                     )}
                 </React.Fragment>

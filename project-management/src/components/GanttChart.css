@@ -59,7 +59,7 @@
     position: relative;
     flex-shrink: 0;
     box-sizing: border-box;
-    margin-top: -10px; /* Task와 Gantt Chart 막대가 일치하도록 조정 */
+    margin-top: -30px; /* Task와 Gantt Chart 막대가 일치하도록 조정 */
 }
 
 /* Do 표시 */

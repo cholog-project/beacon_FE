@@ -89,8 +89,8 @@ const Dashboard = () => {
         navigate('/newTask'); // 'newTask' 페이지로 이동
     };
 
-    const handleAddDoClick = () => {
-        navigate('/newDo'); // 'newDo' 페이지로 이동
+    const handleAddDoClick = (taskId) => {
+        navigate(`/newDo/${taskId}`); // 'newDo' 페이지로 이동
     };
 
     return (
@@ -99,7 +99,7 @@ const Dashboard = () => {
                 <TaskList
                     tasks={tasks}
                     onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 클릭 이벤트 핸들러
-                    onAddDoClick={handleAddDoClick}    // Do 기록 추가 버튼 클릭 이벤트 핸들러
+                    onAddDoClick={(taskId) => handleAddDoClick(taskId)}    // Do 기록 추가 버튼 클릭 이벤트 핸들러
                 />
             </div>
             <div style={{ width: '60%' }}>
