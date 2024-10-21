@@ -11,7 +11,7 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/newTask" element={<NewTask />} />
-                <Route path="/newDo" element={<NewDo />} />
+                <Route path="/newDo/:taskId" element={<NewDo />} />
             </Routes>
         </Router>
     );

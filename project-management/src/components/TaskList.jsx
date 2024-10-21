@@ -1,8 +1,9 @@
 // src/components/TaskList.js
+
 import React, { useState } from 'react';
 import './TaskList.css';
 
-const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRecord, onAddTaskClick, onAddDoClick }) => {
+const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     const toggleDropdown = (taskId) => {
@@ -12,28 +13,28 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRec
     return (
         <div className="task-container">
             <div className="task-header">
-                <div>#</div>
-                <div>Title</div>
-                <div>Assignee</div>
-                <div>Start - End</div>
-                <div>Description</div>
-                <div>Created</div>
-                <div>Updated</div>
-                <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button> {/* 수정된 이벤트 핸들러 사용 */}
+                <div className="task-id">#</div>
+                <div className="task-title">Title</div>
+                <div className="task-assignee">Assignee</div>
+                <div className="task-dates">Start - End</div>
+                <div className="task-description">Description</div>
+                <div className="task-created">Created</div>
+                <div className="task-updated">Updated</div>
+                <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button>
             </div>
 
             {tasks.map((task) => (
                 <React.Fragment key={task.id}>
                     {/* Main task row */}
                     <div className="task-row">
-                        <button className="delete-button" onClick={() => onDeleteTask(task.id)}>x</button> {/* Task 삭제 버튼 */}
-                        <div>{task.id}</div>
-                        <div>{task.title}</div>
-                        <div>{task.assignee}</div>
-                        <div>{task.taskStartDate} - {task.taskEndDate}</div>
-                        <div>{task.description}</div>
-                        <div>{task.createdAt}</div>
-                        <div>{task.updatedAt}</div>
+                        <button className="delete-button" onClick={() => onDeleteTask(task.id)}>x</button>
+                        <div className="task-id">{task.id}</div>
+                        <div className="task-title">{task.title}</div>
+                        <div className="task-assignee">{task.assignee}</div>
+                        <div className="task-dates">{task.taskStartDate} - {task.taskEndDate}</div>
+                        <div className="task-description">{task.description}</div>
+                        <div className="task-created">{task.createdAt}</div>
+                        <div className="task-updated">{task.updatedAt}</div>
                         <button className="dropdown-button" onClick={() => toggleDropdown(task.id)}>
                             {expandedTaskId === task.id ? '▲' : '▼'}
                         </button>
@@ -50,14 +51,15 @@ const TaskList = ({ tasks, onAddTask, onDeleteTask, onAddDoRecord, onDeleteDoRec
                                 <h4>DO Records</h4>
                                 {task.doRecords.map((doRecord) => (
                                     <div key={doRecord.id} className="do-row">
-                                        <button className="delete-button" onClick={() => onDeleteDoRecord(task.id, doRecord.id)}>x</button> {/* Do 삭제 버튼 */}
+                                        <button className="delete-button" onClick={() => onDeleteTask(task.id, doRecord.id)}>x</button>
                                         <div>{doRecord.date}</div>
                                         <div>{doRecord.status}</div>
                                         <div>{doRecord.description}</div>
                                     </div>
                                 ))}
-                                <button className="add-button" onClick={onAddDoClick}>+ Do 추가</button>
+                                <button className="add-button" onClick={()=>onAddDoClick(task.id)}>+ Do 추가</button>
                             </div>
+
                         </div>
                     )}
                 </React.Fragment>
