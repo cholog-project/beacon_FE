@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
 const statusOptions = [
     {
@@ -32,6 +33,7 @@ function NewDo() {
     const [selectedStatus, setSelectedStatus] = useState("Start");
     const [description, setDescription] = useState("");
     const [taskId, setTaskId] = useState("1"); // taskId는 일단 1로 설정 // 수정 필요할 듯
+    const navigate = useNavigate();
 
     // API 요청 함수
     const handleSubmit = async () => {
@@ -142,7 +144,7 @@ function NewDo() {
                     <Button
                         variant="outlined"
                         sx={{ width: "48%" }}
-                        onClick={() => console.log("Close clicked")}
+                        onClick={() => navigate('/')}
                     >
                         Close
                     </Button>
