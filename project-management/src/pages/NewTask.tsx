@@ -203,7 +203,7 @@ function NewTask() {
           />
         </div>
 
-        <div style={{ width: "100%", marginBottom: "16px" }}>
+        <div style={{ width: "100%", marginBottom: "16px", overflow: "visible" }}>
           <TextField
             id="outlined-multiline-description"
             label="Description"

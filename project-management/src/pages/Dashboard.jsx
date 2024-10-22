@@ -26,6 +26,7 @@ const Dashboard = () => {
                     assignee: '팀원 ' + task.teamMemberId, // 팀원의 실제 이름이 필요한 경우, 추가 로직 작성 필요
                     taskStartDate: task.startDate,
                     taskEndDate: task.endDate,
+                    description: task.description,
                     planStartDate: task.planStartDate || task.startDate, // 계획 시작일이 실제 시작일과 다를 경우, API 데이터에서 받아오기
                     planEndDate: task.planEndDate || task.endDate,       // 계획 종료일이 실제 종료일과 다를 경우, API 데이터에서 받아오기
                     doRecords: task.doRecords || [], // Do 기록 로직을 추가할 수 있음
