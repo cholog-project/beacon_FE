@@ -28,9 +28,12 @@ const Dashboard = () => {
                     taskEndDate: task.endDate,
                     planStartDate: task.planStartDate || task.startDate,
                     planEndDate: task.planEndDate || task.endDate,
-                    doRecords: [] // Do 기록은 처음에는 비워둠, 클릭할 때 API로 가져옴
+                    doRecords: [],
                 }));
                 setTasks(formattedTasks);
+                data.tasks.map((task) => (
+                    fetchDoRecords(task.id)
+                ))
             } catch (error) {
                 console.error('작업 데이터를 가져오는 중 오류 발생:', error);
             }

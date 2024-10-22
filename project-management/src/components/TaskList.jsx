@@ -1,8 +1,12 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import './TaskList.css';
 
 const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, onAddDoClick }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
+
+    useEffect(() => {
+        
+    })
 
     const toggleDropdown = async (taskId) => {
         if (expandedTaskId === taskId) {
