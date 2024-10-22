@@ -7,6 +7,25 @@ import { BASE_URL } from "../constant/index.tsx";
 const Dashboard = () => {
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
+    const [teamMembers, setTeamMembers] = useState([]);
+
+    // 팀 멤버를 가져오는 useEffect 추가
+    useEffect(() => {
+        const fetchTeamMembers = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/projects/1/members`); // 프로젝트 ID에 맞게 수정
+                if (!response.ok) {
+                    throw new Error('Failed to fetch team members');
+                }
+                const data = await response.json();
+                setTeamMembers(data.projectMembers); // 팀 멤버 상태 설정
+            } catch (error) {
+                console.error('Failed to fetch team members:', error);
+            }
+        };
+
+        fetchTeamMembers(); // 팀 멤버 가져오기 호출
+    }, []); // 컴포넌트가 마운트될 때 한 번만 호출
 
     // API에서 데이터를 가져오는 함수
     useEffect(() => {
@@ -23,7 +42,8 @@ const Dashboard = () => {
                 const formattedTasks = data.tasks.map((task) => ({
                     id: task.id,
                     title: task.title,
-                    assignee: '팀원 ' + task.teamMemberId, // 팀원의 실제 이름이 필요한 경우, 추가 로직 작성 필요
+                    // 팀원 ID로 이름 가져오기
+                    assignee: teamMembers.find(member => member.memberId === task.teamMemberId)?.name || 'Unknown', // teamMembers에서 이름 찾기
                     taskStartDate: task.startDate,
                     taskEndDate: task.endDate,
                     description: task.description,
@@ -38,7 +58,8 @@ const Dashboard = () => {
         };
 
         fetchTasks();
-    }, []); // 컴포넌트가 처음 렌더링될 때만 API 호출
+    }, [teamMembers]); // 컴포넌트가 처음 렌더링될 때만 API 호출
+
 
     // Task 추가
     const addTask = () => {
