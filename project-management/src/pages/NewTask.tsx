@@ -38,6 +38,7 @@ function NewTask() {
   const [selectedMember, setSelectedMember] = useState("");
   const [projectId, setProjectId] = useState("1"); // projectId는 일단 1로 설정
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]); // 타입 적용 및 함수 내부로 이동
+  const [assigneeName, setAssigneeName] = useState(""); // 팀원의 이름을 저장할 상태 변수 추가
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,7 +55,18 @@ function NewTask() {
   
     fetchTeamMembers();
   }, [projectId]);
-  
+
+  // selectedMember가 변경될 때마다 팀원의 이름을 찾음
+  useEffect(() => {
+    const selected = teamMembers.find(member => member.memberId === selectedMember);
+    if (selected) {
+      setAssigneeName(selected.name); // 선택된 팀원의 이름을 상태에 저장
+    } else {
+      setAssigneeName(""); // 선택된 팀원이 없으면 이름 초기화
+    }
+  }, [selectedMember, teamMembers]); // selectedMember 또는 teamMembers가 변경될 때마다 실행
+
+
   // API 요청 함수
   const handleSubmit = async () => {
     const taskData = {
@@ -79,6 +91,11 @@ function NewTask() {
         // 요청 성공 시 처리
         console.log("Task created successfully");
         alert("Task created successfully!");
+
+        // 2초 후 메인 페이지로 이동
+        setTimeout(() => {
+          navigate('/'); // 메인 페이지로 이동
+        }, 2000);
       } else {
         // 요청 실패 시 처리
         console.error("Failed to create task");
@@ -198,7 +215,7 @@ function NewTask() {
           />
         </div>
 
-        <div style={{ width: "100%", marginBottom: "16px" }}>
+        <div style={{ width: "100%", marginBottom: "16px"}}>
           <TextField
             id="outlined-multiline-description"
             label="Description"

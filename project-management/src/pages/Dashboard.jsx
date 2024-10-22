@@ -7,6 +7,25 @@ import { BASE_URL } from "../constant/index.tsx";
 const Dashboard = () => {
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
+    const [teamMembers, setTeamMembers] = useState([]);
+
+    // 팀 멤버를 가져오는 useEffect 추가
+    useEffect(() => {
+        const fetchTeamMembers = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/projects/1/members`); // 프로젝트 ID에 맞게 수정
+                if (!response.ok) {
+                    throw new Error('Failed to fetch team members');
+                }
+                const data = await response.json();
+                setTeamMembers(data.projectMembers); // 팀 멤버 상태 설정
+            } catch (error) {
+                console.error('Failed to fetch team members:', error);
+            }
+        };
+
+        fetchTeamMembers(); // 팀 멤버 가져오기 호출
+    }, []); // 컴포넌트가 마운트될 때 한 번만 호출
 
     // API에서 데이터를 가져오는 함수
     useEffect(() => {
@@ -23,9 +42,11 @@ const Dashboard = () => {
                 const formattedTasks = data.tasks.map((task) => ({
                     id: task.id,
                     title: task.title,
-                    assignee: '팀원 ' + task.teamMemberId, // 팀원의 실제 이름이 필요한 경우, 추가 로직 작성 필요
+                    // 팀원 ID로 이름 가져오기
+                    assignee: teamMembers.find(member => member.memberId === task.teamMemberId)?.name || 'Unknown', // teamMembers에서 이름 찾기
                     taskStartDate: task.startDate,
                     taskEndDate: task.endDate,
+                    description: task.description,
                     planStartDate: task.planStartDate || task.startDate, // 계획 시작일이 실제 시작일과 다를 경우, API 데이터에서 받아오기
                     planEndDate: task.planEndDate || task.endDate,       // 계획 종료일이 실제 종료일과 다를 경우, API 데이터에서 받아오기
                     doRecords: task.doRecords || [], // Do 기록 로직을 추가할 수 있음
@@ -37,7 +58,8 @@ const Dashboard = () => {
         };
 
         fetchTasks();
-    }, []); // 컴포넌트가 처음 렌더링될 때만 API 호출
+    }, [teamMembers]); // 컴포넌트가 처음 렌더링될 때만 API 호출
+
 
     // Task 추가
     const addTask = () => {
@@ -55,8 +77,10 @@ const Dashboard = () => {
     };
 
     // Task 삭제
-    const deleteTask = (taskId) => {
-        setTasks(tasks.filter((task) => task.id !== taskId));
+    const onDeleteTask = (id) => {
+        // 삭제하려는 task의 id를 제외한 나머지 task로 리스트 업데이트
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
     };
 
     // Do 기록 추가
@@ -93,6 +117,31 @@ const Dashboard = () => {
         navigate(`/newDo/${taskId}`); // 'newDo' 페이지로 이동
     };
 
+// Task 삭제
+    const handleDeleteTask = async (taskId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/project/tasks/${taskId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            setTasks(tasks.filter(task => task.id !== taskId));
+        } catch (error) {
+            console.error('작업 삭제 중 오류 발생:', error);
+        }
+    };
+
+    // Do 삭제
+    const handleDeleteDo = (taskId, doRecordId) => {
+        setTasks(tasks.map(task =>
+            task.id === taskId
+                ? { ...task, doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId) }
+                : task
+        ));
+    };
+
+
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
@@ -100,6 +149,8 @@ const Dashboard = () => {
                     tasks={tasks}
                     onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 클릭 이벤트 핸들러
                     onAddDoClick={(taskId) => handleAddDoClick(taskId)}    // Do 기록 추가 버튼 클릭 이벤트 핸들러
+                    onDeleteTask={handleDeleteTask}      // Task 삭제 핸들러
+                    onDeleteDo={handleDeleteDo}          // Do 삭제 핸들러
                 />
             </div>
             <div style={{ width: '60%' }}>
