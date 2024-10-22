@@ -11,8 +11,7 @@ import {
 import { useState } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import React from "react";
-import { useNavigate } from 'react-router-dom';
-
+import { useParams } from "react-router-dom";
 const statusOptions = [
     {
         value: "Not Started",
@@ -29,15 +28,14 @@ const statusOptions = [
 ];
 
 function NewDo() {
-    // 상태 관리
+    const [startDate, setStartDate] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("Start");
     const [description, setDescription] = useState("");
-    const [taskId, setTaskId] = useState("1"); // taskId는 일단 1로 설정 // 수정 필요할 듯
-    const navigate = useNavigate();
-
+    const taskId = useParams().taskId;
     // API 요청 함수
     const handleSubmit = async () => {
         const doData = {
+            startDate: startDate,
             status: selectedStatus,
             description: description,
             taskId: taskId,
@@ -101,6 +99,17 @@ function NewDo() {
                 >
                     <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>New Do</h1>
                 </div>
+                    <TextField
+                        id="do-start-date"
+                        label="DO Start date"
+                        type="date"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        sx={{ width: "48%" }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
 
                     <TextField
                         id="select-status"

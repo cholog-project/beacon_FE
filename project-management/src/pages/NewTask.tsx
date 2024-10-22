@@ -14,17 +14,6 @@ import { TeamMember } from '../types/team';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-const type = [
-  {
-    value: "Plan",
-    label: "Plan",
-  },
-  {
-    value: "Do",
-    label: "Do",
-  },
-];
-
 const statusOptions = [
   {
     value: "Start",
@@ -42,7 +31,6 @@ const statusOptions = [
 
 function NewTask() {
   // 상태 관리
-  const [selectedType, setSelectedType] = useState("Plan");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -70,7 +58,6 @@ function NewTask() {
   // API 요청 함수
   const handleSubmit = async () => {
     const taskData = {
-      type: selectedType,
       title: title,
       description: description,
       startDate: startDate,
@@ -136,24 +123,6 @@ function NewTask() {
           style={{ width: "100%", textAlign: "center", marginBottom: "16px" }}
         >
           <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>New Task</h1>
-        </div>
-
-        <div style={{ width: "100%" }}>
-          <TextField
-            id="outlined-select-type"
-            select
-            label="Task type"
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-            fullWidth
-            sx={{ marginBottom: "16px" }}
-          >
-            {type.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
         </div>
 
         <div
