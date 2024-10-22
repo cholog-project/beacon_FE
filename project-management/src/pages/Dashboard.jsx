@@ -55,8 +55,10 @@ const Dashboard = () => {
     };
 
     // Task 삭제
-    const deleteTask = (taskId) => {
-        setTasks(tasks.filter((task) => task.id !== taskId));
+    const onDeleteTask = (id) => {
+        // 삭제하려는 task의 id를 제외한 나머지 task로 리스트 업데이트
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
     };
 
     // Do 기록 추가
@@ -93,6 +95,31 @@ const Dashboard = () => {
         navigate(`/newDo/${taskId}`); // 'newDo' 페이지로 이동
     };
 
+// Task 삭제
+    const handleDeleteTask = async (taskId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/project/tasks/${taskId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            setTasks(tasks.filter(task => task.id !== taskId));
+        } catch (error) {
+            console.error('작업 삭제 중 오류 발생:', error);
+        }
+    };
+
+    // Do 삭제
+    const handleDeleteDo = (taskId, doRecordId) => {
+        setTasks(tasks.map(task =>
+            task.id === taskId
+                ? { ...task, doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId) }
+                : task
+        ));
+    };
+
+
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
@@ -100,6 +127,8 @@ const Dashboard = () => {
                     tasks={tasks}
                     onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 클릭 이벤트 핸들러
                     onAddDoClick={(taskId) => handleAddDoClick(taskId)}    // Do 기록 추가 버튼 클릭 이벤트 핸들러
+                    onDeleteTask={handleDeleteTask}      // Task 삭제 핸들러
+                    onDeleteDo={handleDeleteDo}          // Do 삭제 핸들러
                 />
             </div>
             <div style={{ width: '60%' }}>

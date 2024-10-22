@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import './TaskList.css';
 
-const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick }) => {
+const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick, onDeleteDo }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     const toggleDropdown = (taskId) => {
