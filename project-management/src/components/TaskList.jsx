@@ -18,8 +18,6 @@ const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick, onDeleteD
                 <div className="task-assignee">Assignee</div>
                 <div className="task-dates">Start - End</div>
                 <div className="task-description">Description</div>
-                <div className="task-created">Created</div>
-                <div className="task-updated">Updated</div>
                 <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button>
             </div>
 
@@ -33,8 +31,6 @@ const TaskList = ({ tasks, onAddTaskClick, onDeleteTask, onAddDoClick, onDeleteD
                         <div className="task-assignee">{task.assignee}</div>
                         <div className="task-dates">{task.taskStartDate} - {task.taskEndDate}</div>
                         <div className="task-description">{task.description}</div>
-                        <div className="task-created">{task.createdAt}</div>
-                        <div className="task-updated">{task.updatedAt}</div>
                         <button className="dropdown-button" onClick={() => toggleDropdown(task.id)}>
                             {expandedTaskId === task.id ? '▲' : '▼'}
                         </button>
