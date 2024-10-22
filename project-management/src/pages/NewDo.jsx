@@ -12,7 +12,6 @@ import { useState } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import React from "react";
 import { useParams } from "react-router-dom";
-
 const statusOptions = [
     {
         value: "Not Started",
@@ -154,7 +153,7 @@ function NewDo() {
                     <Button
                         variant="outlined"
                         sx={{ width: "48%" }}
-                        onClick={() => console.log("Close clicked")}
+                        onClick={() => navigate('/')}
                     >
                         Close
                     </Button>
