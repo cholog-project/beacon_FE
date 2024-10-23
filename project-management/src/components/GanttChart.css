@@ -3,33 +3,31 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    flex-shrink: 0;
-    width: 100%; /* Task List와 동일하게 너비 조정 */
-    margin-left: 10px; /* Task List와의 간격을 부드럽게 맞추기 위해 10px 설정 */
-    height: auto;
-    overflow-x: auto; /* 가로 스크롤 활성화 */
-    overflow-y: hidden; /* 내용이 넘칠 경우 세로 스크롤 제거 */
+    width: 98%; /* Task List와 동일하게 너비 조정 */
+    margin-left: 10px;
+    overflow-x: auto; /* 가로 스크롤 가능하게 설정 */
+    overflow-y: hidden;
+    margin-top: -15px;
 }
 
 /* 날짜 표시 칸 */
 .gantt-header {
     display: flex;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px; /* Task List 헤더와 동일한 높이로 설정 */
-    align-items: center; /* 수직 중앙 정렬 */
+    align-items: center;
     white-space: nowrap;
-    overflow-x: hidden; /* 스크롤을 숨겨서 깔끔하게 */
-    width: 98%; /* 가로 너비를 화면 전체에 맞춤 */
+    width: 98%; /* 차트 너비 98%로 설정 */
 }
 
 /* 각 날짜 칸 스타일 */
 .gantt-day {
-    flex: 1; /* 각 날짜 칸을 균등하게 화면에 분배 */
     text-align: center;
-    border-right: 1px solid #ddd;
+    border-right: 2px solid #ddd;
     background-color: white;
-    padding: 5px 0; /* 패딩을 설정해 중앙 정렬 */
+    padding: 5px 0;
     box-sizing: border-box;
 }
 
@@ -37,8 +35,9 @@
 .gantt-task-row {
     display: flex;
     align-items: center;
-    height: 70px; /* Task List와 동일한 높이로 설정 */
-    margin-top: 0; /* 여백 제거 */
+    height: 70px;
+    margin-top: 0;
+    margin-left: -16px;
     box-sizing: border-box;
 }
 
@@ -46,79 +45,37 @@
 .gantt-task {
     display: flex;
     align-items: center;
-    height: 50px; /* Task List 행 높이와 동일하게 설정 */
+    justify-content: center; /* 중앙 정렬 */
+    height: 50px;
     background-color: rgba(140, 187, 242, 0.8);
     opacity: 0.3;
     border-radius: 5px;
     text-align: center;
     color: white;
-    font-family: Inter;
     font-size: 14px;
     font-weight: 700;
     line-height: 22px;
     position: relative;
-    flex-shrink: 0;
     box-sizing: border-box;
-    margin-top: -30px; /* Task와 Gantt Chart 막대가 일치하도록 조정 */
+}
+
+/* Task 제목 */
+.gantt-task-title {
+    color: black; 
+    font-weight: bold;
 }
 
 /* Do 표시 */
 .gantt-do {
     position: absolute;
     top: 0;
-    height: 60px; /* Task List와 동일한 높이로 설정 */
-    width: 30px; /* 날짜 칸 하나에 맞춤 */
+    height: 60px;
+    width: 30px;
     background-color: black;
     border-radius: 5px;
     color: white;
     text-align: center;
-    font-family: Inter;
     font-size: 14px;
     font-weight: 700;
-    line-height: 60px; /* 높이를 Task와 일치하도록 설정 */
-    flex-shrink: 0;
-}
-
-/* 김도연의 Plan */
-.first {
-    background-color: red;
-    opacity: 0.3;
-}
-
-/* 김도연의 Do 표시 */
-.first-do {
-    background-color: red;
-}
-
-/* 김성재의 Plan */
-.second {
-    background-color: green;
-    opacity: 0.3;
-}
-
-/* 김성재의 Do 표시 */
-.second-do {
-    background-color: green;
-}
-
-/* 김수현의 Plan */
-.third {
-    background-color: rebeccapurple;
-    opacity: 0.3;
-}
-
-/* 김수현의 Do 표시 */
-.third-do {
-    background-color: rebeccapurple;
-}
-
-/* 허준기의 Plan */
-.fourth {
-    background-color: rgba(255, 204, 0);
-    opacity: 0.3;
-}
-
-/* 허준기 Do 표시 */
-.fourth-do {
-    background-color: rgba(255, 204, 0);
+    line-height: 60px;
 }

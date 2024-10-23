@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { BASE_URL } from "../constant/index.tsx";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 const statusOptions = [
     {
         value: "Not Started",
@@ -32,6 +32,7 @@ function NewDo() {
     const [selectedStatus, setSelectedStatus] = useState("Start");
     const [description, setDescription] = useState("");
     const taskId = useParams().taskId;
+    const navigate = useNavigate();
     // API 요청 함수
     const handleSubmit = async () => {
         const doData = {

@@ -50,6 +50,7 @@
 .task-row:hover .delete-button {
     display: inline-block; /* 마우스를 올리면 삭제 버튼 표시 */
 }
+
 /* 각 Task 항목의 공통 스타일 */
 .task-row div,
 .task-header div {
@@ -132,6 +133,24 @@
     margin-bottom: 10px;
 }
 
+/* DO Records 헤더 */
+.do-records-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    background-color: #cccccc; /* 헤더 배경 색 */
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #bbb; /* 경계선 추가 */
+    margin-bottom: 5px;
+}
+
+.do-header-item {
+    flex: 1; /* 각 헤더 아이템이 동일한 너비를 차지 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    font-weight: bold;
+}
+
 /* DO 레코드 한 줄 */
 .do-row {
     display: flex;
@@ -142,6 +161,34 @@
     margin-bottom: 5px;
     border-radius: 3px;
     border: 1px solid #bbb; /* 구분을 위한 경계선 */
+    position: relative; /* 삭제 버튼을 위치시키기 위해 상대 위치 사용 */
+}
+
+/* DO 레코드 삭제 버튼 (기본적으로 숨김) */
+.do-row .delete-button {
+    display: none; /* 기본적으로 삭제 버튼 숨김 */
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: absolute; /* 삭제 버튼을 절대 위치로 설정 */
+    left: 10px; /* 왼쪽에 고정 */
+    top: 50%; /* 세로 가운데 정렬 */
+    transform: translateY(-50%); /* 가운데 정렬을 위해 위로 50% 이동 */
+}
+
+/* DO 레코드 한 줄에 마우스를 올렸을 때 삭제 버튼 표시 */
+.do-row:hover .delete-button {
+    display: inline-block; /* 마우스를 올리면 삭제 버튼 표시 */
+}
+
+/* DO 레코드 내부 각 항목 (삭제 버튼 포함) */
+.do-row > div {
+    flex: 1; /* 각 항목이 동일한 너비를 차지 */
+    text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 /* 추가 버튼 스타일 */
@@ -149,7 +196,7 @@
     background-color: #388e3c; /* 더 진한 녹색으로 버튼 색상 설정 */
     color: white;
     border: none;
-    padding: 2px;
+    padding: 5px 10px; /* 좀 더 넉넉한 padding */
     cursor: pointer;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* 진한 그림자 추가 */

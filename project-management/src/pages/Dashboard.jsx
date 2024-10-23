@@ -6,91 +6,72 @@ import { BASE_URL } from "../constant/index.tsx";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState([]); // Task 목록
 
-    // API에서 데이터를 가져오는 함수
+    // Task 목록을 API에서 가져오는 함수
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch(`${BASE_URL}/project/tasks`); // 백틱 사용
+                const response = await fetch(`${BASE_URL}/project/tasks`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const data = await response.json(); // JSON 파싱
+                const data = await response.json();
                 console.log(data); // 데이터 확인용
 
-                // API 데이터 형식을 현재 구조에 맞게 변환
+                // Task 데이터를 변환하여 상태에 저장
                 const formattedTasks = data.tasks.map((task) => ({
                     id: task.id,
                     title: task.title,
-                    assignee: '팀원 ' + task.teamMemberId, // 팀원의 실제 이름이 필요한 경우, 추가 로직 작성 필요
+                    assignee: '팀원 ' + task.teamMemberId,
                     taskStartDate: task.startDate,
                     taskEndDate: task.endDate,
-                    planStartDate: task.planStartDate || task.startDate, // 계획 시작일이 실제 시작일과 다를 경우, API 데이터에서 받아오기
-                    planEndDate: task.planEndDate || task.endDate,       // 계획 종료일이 실제 종료일과 다를 경우, API 데이터에서 받아오기
-                    doRecords: task.doRecords || [], // Do 기록 로직을 추가할 수 있음
+                    planStartDate: task.planStartDate || task.startDate,
+                    planEndDate: task.planEndDate || task.endDate,
+                    doRecords: [],
                 }));
                 setTasks(formattedTasks);
+                data.tasks.map((task) => (
+                    fetchDoRecords(task.id)
+                ))
             } catch (error) {
                 console.error('작업 데이터를 가져오는 중 오류 발생:', error);
             }
         };
 
         fetchTasks();
-    }, []); // 컴포넌트가 처음 렌더링될 때만 API 호출
+    }, []);
 
-    // Task 추가
-    const addTask = () => {
-        const newTask = {
-            id: tasks.length + 1,
-            title: `Task ${tasks.length + 1}`,
-            assignee: '새로운 사람',
-            taskStartDate: '2024-10-10',
-            taskEndDate: '2024-10-20',
-            planStartDate: '2024-10-11',
-            planEndDate: '2024-10-19',
-            doRecords: [],
-        };
-        setTasks([...tasks, newTask]);
-    };
-
-    // Task 삭제
-    const deleteTask = (taskId) => {
-        setTasks(tasks.filter((task) => task.id !== taskId));
-    };
-
-    // Do 기록 추가
-    const addDoRecord = (taskId) => {
-        setTasks(tasks.map((task) => {
-            if (task.id === taskId) {
-                const newDoRecord = {
-                    id: task.doRecords.length + 1,
-                    date: '2024-10-10',
-                    status: 'new',
-                    description: '새로운 Do 기록'
-                };
-                return { ...task, doRecords: [...task.doRecords, newDoRecord] };
+    // 특정 Task의 Do 기록을 API에서 가져오는 함수
+    const fetchDoRecords = async (taskId) => {
+        try {
+            console.log(`Fetching Do records for Task ID: ${taskId}`);
+            const response = await fetch(`${BASE_URL}/project/tasks/${taskId}/dos`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch Do records for task ${taskId}`);
             }
-            return task;
-        }));
+            const doRecordsData = await response.json();
+            console.log(`Do records fetched for Task ID: ${taskId}`, doRecordsData);
+
+            // 상태 업데이트: 특정 task의 doRecords만 업데이트
+            setTasks((prevTasks) =>
+                prevTasks.map((task) =>
+                    task.id === taskId ? { ...task, doRecords: doRecordsData.dos } : task
+                )
+            );
+        } catch (error) {
+            console.error(`Do 기록을 가져오는 중 오류 발생 (Task ID: ${taskId}):`, error);
+        }
     };
 
-    // Do 기록 삭제
-    const deleteDoRecord = (taskId, doId) => {
-        setTasks(tasks.map((task) => {
-            if (task.id === taskId) {
-                return { ...task, doRecords: task.doRecords.filter((doRecord) => doRecord.id !== doId) };
-            }
-            return task;
-        }));
-    };
-
+    // Task 추가 페이지로 이동하는 함수
     const handleAddTaskClick = () => {
-        navigate('/newTask'); // 'newTask' 페이지로 이동
+        navigate('/newTask');
     };
 
+    // Do 추가 페이지로 이동하는 함수
     const handleAddDoClick = (taskId) => {
-        navigate(`/newDo/${taskId}`); // 'newDo' 페이지로 이동
+        navigate(`/newDo/${taskId}`);
     };
 
     return (
@@ -98,8 +79,9 @@ const Dashboard = () => {
             <div style={{ width: '40%' }}>
                 <TaskList
                     tasks={tasks}
-                    onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 클릭 이벤트 핸들러
-                    onAddDoClick={(taskId) => handleAddDoClick(taskId)}    // Do 기록 추가 버튼 클릭 이벤트 핸들러
+                    onFetchDoRecords={fetchDoRecords} // Do 기록을 가져오는 함수 전달
+                    onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 핸들러
+                    onAddDoClick={handleAddDoClick}    // Do 추가 버튼 핸들러
                 />
             </div>
             <div style={{ width: '60%' }}>
