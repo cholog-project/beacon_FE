@@ -75,11 +75,11 @@
 }
 
 .task-dates {
-    flex: 1 1 25%; /* Start - End 날짜 열 너비 설정 */
+    flex: 1 1 35%; /* Start - End 날짜 열 너비 설정 */
 }
 
 .task-description {
-    flex: 1 1 20%; /* Description 열 너비 설정 */
+    flex: 1 1 30%; /* Description 열 너비 설정 */
 }
 
 .task-created,

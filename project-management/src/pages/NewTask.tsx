@@ -79,6 +79,11 @@ function NewTask() {
         // 요청 성공 시 처리
         console.log("Task created successfully");
         alert("Task created successfully!");
+
+        setTimeout(() => {
+          navigate('/'); // 메인 페이지로 이동
+        }, 500);
+
       } else {
         // 요청 실패 시 처리
         console.error("Failed to create task");

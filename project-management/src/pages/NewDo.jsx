@@ -55,6 +55,10 @@ function NewDo() {
                 // 요청 성공 시 처리
                 console.log("Do created successfully");
                 alert("Do created successfully!");
+
+                setTimeout(() => {
+                    navigate('/'); // 메인 페이지로 이동
+                }, 500);
             } else {
                 // 요청 실패 시 처리
                 console.error("Failed to create do");
