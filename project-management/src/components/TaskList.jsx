@@ -66,8 +66,8 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, 
                                 {/* Do Records 출력 */}
                                 {task.doRecords.length > 0 ? (
                                     task.doRecords.map((doRecord) => (
-                                        <div key={doRecord.id} className="do-row">
-                                            <button className="delete-button" onClick={() => onDeleteTask(task.id, doRecord.id)}>x</button>
+                                        <div className="do-row">
+                                            <button className="delete-button" onClick={() => onDeleteDo(doRecord.id)}>x</button>
                                             <div>{doRecord.date}</div>
                                             <div>{doRecord.status}</div>
                                             <div>{doRecord.description}</div>

@@ -85,7 +85,7 @@ const GanttChart = ({ tasks }) => {
                     key={doRecord.id}
                     className="gantt-do"
                     style={{
-                      marginLeft: `${(doStartDay - startDay) * dayWidth * 0.98}px`, // Task 시작일로부터 Do의 차이만큼 이동
+                      marginLeft: `${doStartDay * dayWidth * 2 - 185}px`,
                       width: `${dayWidth}px`, // Do 막대는 하루 단위
                     }}
                   >

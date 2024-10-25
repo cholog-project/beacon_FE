@@ -26,6 +26,7 @@ const Dashboard = () => {
 
         fetchTeamMembers(); // 팀 멤버 가져오기 호출
     }, []);
+
     // Task 목록을 API에서 가져오는 함수
     useEffect(() => {
         const fetchTasks = async () => {
@@ -109,14 +110,28 @@ const Dashboard = () => {
     };
 
     // Do 삭제
-    const handleDeleteDo = (taskId, doRecordId) => {
-        setTasks(tasks.map(task =>
-            task.id === taskId
-                ? { ...task, doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId) }
-                : task
-        ));
+    const handleDeleteDo = async (taskId, doRecordId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/project/tasks/dos/${doRecordId}`, {
+                method: 'DELETE',
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // // 상태 업데이트: 삭제된 doRecord를 제외한 새로운 배열 생성
+            // setTasks(tasks.map(task =>
+            //     task.id === taskId
+            //         ? { ...task, doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId) }
+            //         : task
+            // ));
+            setTasks(tasks.map(task => ({
+                ...task,
+                doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId)
+            })));
+        } catch (error) {
+            console.error('Do 기록 삭제 중 오류 발생:', error);
+        }
     };
-
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
@@ -125,7 +140,7 @@ const Dashboard = () => {
                     onFetchDoRecords={fetchDoRecords} // Do 기록을 가져오는 함수 전달
                     onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 핸들러
                     onAddDoClick={handleAddDoClick}    // Do 추가 버튼 핸들러
-                    onDeleteTask={handleDeleteTask}      // Task 삭제 핸들러
+                    onDeleteTask={handleDeleteTask}   // Task 삭제 핸들러
                     onDeleteDo={handleDeleteDo}   
                 />
             </div>
