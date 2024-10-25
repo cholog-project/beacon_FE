@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from 'react';
 import './TaskList.css';
 
-const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, onAddDoClick }) => {
+const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, onAddDoClick, onDeleteDo }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     useEffect(() => {
@@ -29,8 +29,6 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, 
                 <div className="task-assignee">Assignee</div>
                 <div className="task-dates">Start - End</div>
                 <div className="task-description">Description</div>
-                <div className="task-created">Created</div>
-                <div className="task-updated">Updated</div>
                 <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button>
             </div>
 
@@ -43,8 +41,6 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, 
                         <div className="task-assignee">{task.assignee}</div>
                         <div className="task-dates">{task.taskStartDate} - {task.taskEndDate}</div>
                         <div className="task-description">{task.description}</div>
-                        <div className="task-created">{task.createdAt}</div>
-                        <div className="task-updated">{task.updatedAt}</div>
                         <button className="dropdown-button" onClick={() => toggleDropdown(task.id)}>
                             {expandedTaskId === task.id ? '▲' : '▼'}
                         </button>
