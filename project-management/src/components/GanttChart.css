@@ -66,16 +66,16 @@
 }
 
 /* Do 표시 */
-.gantt-do {
-    position: absolute;
-    top: 0;
-    height: 50px;
-    width: 30px;
-    background-color: black;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 60px;
-}
+/*.gantt-do {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    height: 50px;*/
+/*    width: 30px;*/
+/*    background-color: black;*/
+/*    border-radius: 5px;*/
+/*    color: white;*/
+/*    text-align: center;*/
+/*    font-size: 14px;*/
+/*    font-weight: 700;*/
+/*    line-height: 60px;*/
+/*}*/
