@@ -110,24 +110,25 @@ const Dashboard = () => {
     };
 
     // Do 삭제
-    const handleDeleteDo = async (taskId, doRecordId) => {
+    const handleDeleteDo = async (doId) => {
         try {
-            const response = await fetch(`${BASE_URL}/project/tasks/dos/${doRecordId}`, {
+            console.log(`Attempting to delete Do with ID: ${doId}`);
+            const response = await fetch(`${BASE_URL}/project/tasks/dos/${doId}`, {
                 method: 'DELETE',
             });
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            // // 상태 업데이트: 삭제된 doRecord를 제외한 새로운 배열 생성
-            // setTasks(tasks.map(task =>
-            //     task.id === taskId
-            //         ? { ...task, doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId) }
-            //         : task
-            // ));
-            setTasks(tasks.map(task => ({
-                ...task,
-                doRecords: task.doRecords.filter(doRecord => doRecord.id !== doRecordId)
-            })));
+            console.log(`Do with ID ${doId} successfully deleted`);
+    
+            // 상태 업데이트: 삭제한 Do를 제외한 나머지 Do를 반영
+            setTasks((prevTasks) =>
+                prevTasks.map(task => ({
+                    ...task,
+                    doRecords: task.doRecords.filter(doRecord => doRecord.id !== doId)
+                }))
+            );
         } catch (error) {
             console.error('Do 기록 삭제 중 오류 발생:', error);
         }
