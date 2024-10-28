@@ -3,32 +3,31 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 98%; /* Task List와 동일하게 너비 조정 */
-    margin-left: 10px;
+    width: 100%; /* 전체 너비를 100%로 설정 */
+    margin: 0; /* 불필요한 여백 제거 */
     overflow-x: auto; /* 가로 스크롤 가능하게 설정 */
     overflow-y: hidden;
-    margin-top: -15px;
 }
 
 /* 날짜 표시 칸 */
 .gantt-header {
     display: flex;
     font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 5px;
     height: 60px; /* Task List 헤더와 동일한 높이로 설정 */
     align-items: center;
     white-space: nowrap;
-    width: 98%; /* 차트 너비 98%로 설정 */
+    width: 100%; /* 차트 너비 100%로 설정 */
+    margin: 0; /* 상하 마진 제거 */
 }
 
 /* 각 날짜 칸 스타일 */
 .gantt-day {
     text-align: center;
-    border-right: 2px solid #ddd;
+    border-right: 1px solid #ddd; /* 칸 간의 경계선 */
     background-color: white;
-    padding: 5px 0;
+    padding: 0; /* 패딩 제거 */
     box-sizing: border-box;
+    width: calc(100% / 31); /* 각 날짜 칸 너비를 정확히 31등분 */
 }
 
 /* 각 Task의 Plan 영역 */
@@ -36,8 +35,7 @@
     display: flex;
     align-items: center;
     height: 70px;
-    margin-top: 0;
-    margin-left: -16px;
+    margin: 0; /* 모든 마진 제거 */
     box-sizing: border-box;
 }
 
@@ -54,28 +52,112 @@
     color: white;
     font-size: 14px;
     font-weight: 700;
-    line-height: 22px;
     position: relative;
+    margin: 0; /* 불필요한 마진 제거 */
     box-sizing: border-box;
 }
 
 /* Task 제목 */
 .gantt-task-title {
-    color: black; 
+    color: black;
     font-weight: bold;
 }
 
 /* Do 표시 */
-/*.gantt-do {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    height: 50px;*/
-/*    width: 30px;*/
-/*    background-color: black;*/
-/*    border-radius: 5px;*/
-/*    color: white;*/
+.gantt-do {
+    position: absolute;
+    top: 5px; /* `gantt-day` 바로 아래로 위치 */
+    height: 50px;
+    width: calc(100% / 31); /* 날짜 칸과 같은 너비 */
+    background-color: black;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 50px;
+}
+
+
+/*!* 전체 틀 *!*/
+
+/*.gantt-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: flex-start;*/
+/*    width: 98%; !* Task List와 동일하게 너비 조정 *!*/
+/*    margin-left: 10px;*/
+/*    overflow-x: auto; !* 가로 스크롤 가능하게 설정 *!*/
+/*    overflow-y: hidden;*/
+/*    margin-top: -15px;*/
+/*}*/
+
+/*!* 날짜 표시 칸 *!*/
+/*.gantt-header {*/
+/*    display: flex;*/
+/*    font-weight: bold;*/
+/*    margin-top: 5px;*/
+/*    margin-bottom: 5px;*/
+/*    height: 60px; !* Task List 헤더와 동일한 높이로 설정 *!*/
+/*    align-items: center;*/
+/*    white-space: nowrap;*/
+/*    width: 98%; !* 차트 너비 98%로 설정 *!*/
+/*}*/
+
+/*!* 각 날짜 칸 스타일 *!*/
+/*.gantt-day {*/
 /*    text-align: center;*/
+/*    border-right: 2px solid #ddd;*/
+/*    background-color: white;*/
+/*    padding: 5px 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*!* 각 Task의 Plan 영역 *!*/
+/*.gantt-task-row {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    height: 70px;*/
+/*    margin-top: 0;*/
+/*    margin-left: -16px;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+/*!* Plan 막대 *!*/
+/*.gantt-task {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center; !* 중앙 정렬 *!*/
+/*    height: 50px;*/
+/*    background-color: rgba(140, 187, 242, 0.8);*/
+/*    opacity: 0.3;*/
+/*    border-radius: 5px;*/
+/*    text-align: center;*/
+/*    color: white;*/
 /*    font-size: 14px;*/
 /*    font-weight: 700;*/
-/*    line-height: 60px;*/
+/*    line-height: 22px;*/
+/*    position: relative;*/
+/*    box-sizing: border-box;*/
 /*}*/
+
+/*!* Task 제목 *!*/
+/*.gantt-task-title {*/
+/*    color: black; */
+/*    font-weight: bold;*/
+/*}*/
+
+/*!* Do 표시 *!*/
+/*!*.gantt-do {*!*/
+/*!*    position: absolute;*!*/
+/*!*    top: 0;*!*/
+/*!*    height: 50px;*!*/
+/*!*    width: 30px;*!*/
+/*!*    background-color: black;*!*/
+/*!*    border-radius: 5px;*!*/
+/*!*    color: white;*!*/
+/*!*    text-align: center;*!*/
+/*!*    font-size: 14px;*!*/
+/*!*    font-weight: 700;*!*/
+/*!*    line-height: 60px;*!*/
+/*!*}*!*/
