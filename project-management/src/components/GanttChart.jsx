@@ -11,10 +11,28 @@ const getDaysBetweenDates = (startDate, endDate) => {
 };
 
 const GanttChart = ({ tasks }) => {
-    const totalDays = 31; // 예시로 31일 (1달) 기준으로 설정
-    const startMonth = new Date("2024-10-01"); // 간트 차트 기준 날짜 설정
-    const chartRef = useRef(null); // GanttChart 컨테이너 참조
+    // 초기 날짜를 2024년 10월로 설정
+    const [startDate, setStartDate] = useState(new Date("2024-10-01"));
+    const [endDate, setEndDate] = useState(new Date("2024-10-31"));
+    const totalDays = getDaysBetweenDates(startDate, endDate);
+    const chartRef = useRef(null);
     const [dayPositions, setDayPositions] = useState(new Map());
+
+    // 날짜 범위 이동 함수
+    const shiftDateRange = (months) => {
+        const newStartDate = new Date(
+            startDate.getFullYear(),
+            startDate.getMonth() + months,
+            1
+        );
+        const newEndDate = new Date(
+            newStartDate.getFullYear(),
+            newStartDate.getMonth() + 1,
+            0
+        );
+        setStartDate(newStartDate);
+        setEndDate(newEndDate);
+    };
 
     // Gantt 차트 각 날짜 위치 계산
     useEffect(() => {
@@ -22,11 +40,10 @@ const GanttChart = ({ tasks }) => {
             const newPositions = new Map();
             const chartLeft = chartRef.current.getBoundingClientRect().left;
 
-            // 각 날짜 요소의 실제 위치를 가져와 `dayPositions`에 저장
             Array.from(chartRef.current.querySelectorAll(".gantt-day")).forEach(
                 (day, index) => {
                     const positionLeft = day.getBoundingClientRect().left - chartLeft;
-                    newPositions.set(index, positionLeft); // 인덱스를 0부터 시작하도록 수정
+                    newPositions.set(index, positionLeft);
                 }
             );
 
@@ -35,24 +52,47 @@ const GanttChart = ({ tasks }) => {
     }, [chartRef, totalDays]);
 
     return (
-        <div className="gantt-container" ref={chartRef}>
-            {/* 날짜 헤더 */}
-            <div className="gantt-header">
+        <div className="gantt-container">
+            {/* 날짜 범위 이동 버튼 */}
+            <div className="gantt-controls">
+                <button onClick={() => shiftDateRange(-1)}>◀ 이전 달</button>
+                <button onClick={() => shiftDateRange(1)}>다음 달 ▶</button>
+            </div>
+            {/* 공통 년도와 월 표시 */}
+            <div className="gantt-header-month">
+                {startDate.getFullYear()}년 {startDate.toLocaleString("default", { month: "long" })}
+            </div>
+
+            {/* 날짜 헤더 - 일자만 표시 */}
+            <div className="gantt-header" ref={chartRef}>
                 {Array.from({ length: totalDays }, (_, i) => (
                     <div key={i} className="gantt-day">
-                        {i + 1}
+                        {new Date(startDate.getTime() + i * 1000 * 60 * 60 * 24).getDate()}
                     </div>
                 ))}
             </div>
 
             {/* 각 Task의 간트 차트 */}
-            {tasks.map((task) => {
-                const startDate = new Date(task.planStartDate);
-                const endDate = new Date(task.planEndDate);
+            {tasks
+                // 현재 월에 속하는 태스크만 필터링
+                .filter((task) => {
+                    const taskStartDate = new Date(task.planStartDate);
+                    const taskEndDate = new Date(task.planEndDate);
+
+                    // 현재 표시 중인 월과 비교하여 태스크의 시작/끝 날짜가 해당 월에 포함되는지 확인
+                    return (
+                        (taskStartDate >= startDate && taskStartDate <= endDate) ||
+                        (taskEndDate >= startDate && taskEndDate <= endDate) ||
+                        (taskStartDate <= startDate && taskEndDate >= endDate)
+                    );
+                })
+                .map((task) => {
+                const taskStartDate = new Date(task.planStartDate);
+                const taskEndDate = new Date(task.planEndDate);
 
                 // 시작 위치를 월의 첫 날로부터 일 수 차이로 계산
                 const startDay = Math.max(
-                    Math.round((startDate - startMonth) / (1000 * 60 * 60 * 24)),
+                    Math.round((taskStartDate - startDate) / (1000 * 60 * 60 * 24)),
                     0
                 );
                 const taskDuration = getDaysBetweenDates(
@@ -76,10 +116,9 @@ const GanttChart = ({ tasks }) => {
                             {task.doRecords.map((doRecord) => {
                                 const doDate = new Date(doRecord.date);
                                 const doDayIndex = Math.round(
-                                    (doDate - startMonth) / (1000 * 60 * 60 * 24)
-                                ); // 인덱스를 0부터 시작하도록 수정
+                                    (doDate - startDate) / (1000 * 60 * 60 * 24)
+                                );
 
-                                // Task의 시작 위치를 기준으로 `do` 위치 계산
                                 const doPositionRelativeToTask =
                                     (doDayIndex - startDay) * (dayPositions.get(1) - dayPositions.get(0));
 
