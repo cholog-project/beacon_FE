@@ -9,8 +9,30 @@
     overflow-y: hidden;
 }
 
-/* 날짜 표시 칸 */
+/* 헤더 - 날짜 범위, 월, 일자 표시 */
 .gantt-header {
+    display: flex;
+    flex-direction: column; /* 세로로 정렬하여 각 섹션 배치 */
+    width: 100%;
+}
+
+/* 날짜 범위 이동 버튼 */
+.gantt-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 0;
+}
+
+/* 월 표시 */
+.gantt-header-month {
+    font-weight: bold;
+    text-align: center;
+    margin: 5px 0;
+}
+
+/* 날짜 표시 칸 */
+.gantt-header-days {
     display: flex;
     font-weight: bold;
     height: 60px; /* Task List 헤더와 동일한 높이로 설정 */
@@ -34,7 +56,7 @@
 .gantt-task-row {
     display: flex;
     align-items: center;
-    height: 70px;
+    height: 60px;
     margin: 0; /* 모든 마진 제거 */
     box-sizing: border-box;
 }

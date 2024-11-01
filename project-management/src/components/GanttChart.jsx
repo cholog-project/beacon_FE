@@ -57,23 +57,21 @@ const GanttChart = ({ tasks }) => {
 
     return (
         <div className="gantt-container">
-            {/* 날짜 범위 이동 버튼 */}
-            <div className="gantt-controls">
-                <button onClick={() => shiftDateRange(-1)}>◀ 이전 달</button>
-                <button onClick={() => shiftDateRange(1)}>다음 달 ▶</button>
-            </div>
-            {/* 공통 년도와 월 표시 */}
-            <div className="gantt-header-month">
-                {startDate.getFullYear()}년 {startDate.toLocaleString("default", { month: "long" })}
-            </div>
-
-            {/* 날짜 헤더 - 일자만 표시 */}
-            <div className="gantt-header" ref={chartRef}>
-                {Array.from({ length: totalDays }, (_, i) => (
-                    <div key={i} className="gantt-day">
-                        {new Date(startDate.getTime() + i * 1000 * 60 * 60 * 24).getDate()}
-                    </div>
-                ))}
+            <div className="gantt-header">
+                <div className="gantt-controls">
+                    <button onClick={() => shiftDateRange(-1)}>◀ 이전 달</button>
+                    <button onClick={() => shiftDateRange(1)}>다음 달 ▶</button>
+                </div>
+                <div className="gantt-header-month">
+                    {startDate.getFullYear()}년 {startDate.toLocaleString("default", {month: "long"})}
+                </div>
+                <div className="gantt-header-days" ref={chartRef}>
+                    {Array.from({length: totalDays}, (_, i) => (
+                        <div key={i} className="gantt-day">
+                            {new Date(startDate.getTime() + i * 1000 * 60 * 60 * 24).getDate()}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* 각 Task의 간트 차트 */}
@@ -91,58 +89,58 @@ const GanttChart = ({ tasks }) => {
                     );
                 })
                 .map((task) => {
-                const taskStartDate = new Date(task.planStartDate);
-                const taskEndDate = new Date(task.planEndDate);
+                    const taskStartDate = new Date(task.planStartDate);
+                    const taskEndDate = new Date(task.planEndDate);
 
-                // 시작 위치를 월의 첫 날로부터 일 수 차이로 계산
-                const startDay = Math.max(
-                    Math.round((taskStartDate - startDate) / (1000 * 60 * 60 * 24)),
-                    0
-                );
-                const taskDuration = getDaysBetweenDates(
-                    task.planStartDate,
-                    task.planEndDate
-                );
+                    // 시작 위치를 월의 첫 날로부터 일 수 차이로 계산
+                    const startDay = Math.max(
+                        Math.round((taskStartDate - startDate) / (1000 * 60 * 60 * 24)),
+                        0
+                    );
+                    const taskDuration = getDaysBetweenDates(
+                        task.planStartDate,
+                        task.planEndDate
+                    );
 
-                return (
-                    <div key={task.id} className="gantt-task-row">
-                        {/* Task 막대 */}
-                        <div
-                            className="gantt-task"
-                            style={{
-                                marginLeft: `${dayPositions.get(startDay) || 0}px`,
-                                width: `${taskDuration * (dayPositions.get(1) - dayPositions.get(0))}px`,
-                            }}
-                        >
-                            <span className="gantt-task-title">{task.title}</span>
+                    return (
+                        <div key={task.id} className="gantt-task-row">
+                            {/* Task 막대 */}
+                            <div
+                                className="gantt-task"
+                                style={{
+                                    marginLeft: `${dayPositions.get(startDay) || 0}px`,
+                                    width: `${taskDuration * (dayPositions.get(1) - dayPositions.get(0))}px`,
+                                }}
+                            >
+                                <span className="gantt-task-title">{task.title}</span>
 
-                            {/* 각 Do 레코드를 해당 날짜에 표시 */}
-                            {task.doRecords.map((doRecord) => {
-                                const doDate = new Date(doRecord.date);
-                                const doDayIndex = Math.round(
-                                    (doDate - startDate) / (1000 * 60 * 60 * 24)
-                                );
+                                {/* 각 Do 레코드를 해당 날짜에 표시 */}
+                                {task.doRecords.map((doRecord) => {
+                                    const doDate = new Date(doRecord.date);
+                                    const doDayIndex = Math.round(
+                                        (doDate - startDate) / (1000 * 60 * 60 * 24)
+                                    );
 
-                                const doPositionRelativeToTask =
-                                    (doDayIndex - startDay) * (dayPositions.get(1) - dayPositions.get(0));
+                                    const doPositionRelativeToTask =
+                                        (doDayIndex - startDay) * (dayPositions.get(1) - dayPositions.get(0));
 
-                                return (
-                                    <div
-                                        key={doRecord.id}
-                                        className="gantt-do"
-                                        style={{
-                                            left: `${doPositionRelativeToTask}px`,
-                                            width: `${dayPositions.get(1) - dayPositions.get(0)}px`,
-                                        }}
-                                    >
-                                        do
-                                    </div>
-                                );
-                            })}
+                                    return (
+                                        <div
+                                            key={doRecord.id}
+                                            className="gantt-do"
+                                            style={{
+                                                left: `${doPositionRelativeToTask}px`,
+                                                width: `${dayPositions.get(1) - dayPositions.get(0)}px`,
+                                            }}
+                                        >
+                                            do
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
         </div>
     );
 };
