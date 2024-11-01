@@ -12,8 +12,12 @@ const getDaysBetweenDates = (startDate, endDate) => {
 
 const GanttChart = ({ tasks }) => {
     // 초기 날짜를 2024년 10월로 설정
-    const [startDate, setStartDate] = useState(new Date("2024-10-01"));
-    const [endDate, setEndDate] = useState(new Date("2024-10-31"));
+    const currentDate = new Date();
+    const initialStartDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1); // 현재 달의 첫 날
+    const initialEndDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0); // 현재 달의 마지막 날
+
+    const [startDate, setStartDate] = useState(initialStartDate);
+    const [endDate, setEndDate] = useState(initialEndDate);
     const totalDays = getDaysBetweenDates(startDate, endDate);
     const chartRef = useRef(null);
     const [dayPositions, setDayPositions] = useState(new Map());
