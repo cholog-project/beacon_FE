@@ -84,7 +84,7 @@ const Dashboard = () => {
         }
     };
 
-    
+
     // Task 추가 페이지로 이동하는 함수
     const handleAddTaskClick = () => {
         navigate('/newTask');
@@ -116,12 +116,12 @@ const Dashboard = () => {
             const response = await fetch(`${BASE_URL}/project/tasks/dos/${doId}`, {
                 method: 'DELETE',
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             console.log(`Do with ID ${doId} successfully deleted`);
-    
+
             // 상태 업데이트: 삭제한 Do를 제외한 나머지 Do를 반영
             setTasks((prevTasks) =>
                 prevTasks.map(task => ({
@@ -142,7 +142,7 @@ const Dashboard = () => {
                     onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 핸들러
                     onAddDoClick={handleAddDoClick}    // Do 추가 버튼 핸들러
                     onDeleteTask={handleDeleteTask}   // Task 삭제 핸들러
-                    onDeleteDo={handleDeleteDo}   
+                    onDeleteDo={handleDeleteDo}
                 />
             </div>
             <div style={{ width: '60%' }}>
