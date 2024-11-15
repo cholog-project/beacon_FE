@@ -76,14 +76,20 @@ const GanttChart = ({ tasks }) => {
                 const taskEndDate = new Date(task.planEndDate);
                 const monthStart = dateArray[0];
                 const monthEnd = dateArray[dateArray.length - 1];
+
                 if (taskEndDate < monthStart || taskStartDate > monthEnd) {
                     return null;
                 }
+
+                // 중간 달 날짜 포함 계산
                 const visibleStartDate = taskStartDate < monthStart ? monthStart : taskStartDate;
                 const visibleEndDate = taskEndDate > monthEnd ? monthEnd : taskEndDate;
-                const includeEndDate = !(taskStartDate < monthStart);
-                const startDayIndex = Math.round((visibleStartDate - startDate) / (1000 * 60 * 60 * 24));
-                const taskDuration = getDaysBetweenDates(visibleStartDate, visibleEndDate, includeEndDate);
+
+                const startDayIndex = Math.round((visibleStartDate - dateArray[0]) / (1000 * 60 * 60 * 24));
+                const endDayIndex = Math.round((visibleEndDate - dateArray[0]) / (1000 * 60 * 60 * 24));
+
+                // `endDayIndex`를 포함하도록 수정
+                const taskDuration = endDayIndex - startDayIndex + 1;
 
                 return (
                     <div key={task.id} className="gantt-task-row">
@@ -97,7 +103,7 @@ const GanttChart = ({ tasks }) => {
                             <span className="gantt-task-title">{task.title}</span>
                             {task.doRecords.map((doRecord) => {
                                 const doDate = new Date(doRecord.date);
-                                const doDayIndex = Math.round((doDate - startDate) / (1000 * 60 * 60 * 24));
+                                const doDayIndex = Math.round((doDate - dateArray[0]) / (1000 * 60 * 60 * 24));
                                 const doPositionRelativeToTask =
                                     (doDayIndex - startDayIndex) * (dayPositions.get(1) - dayPositions.get(0));
                                 return (
