@@ -71,55 +71,60 @@ const GanttChart = ({ tasks }) => {
                 </div>
             </div>
 
-            {tasks.map((task) => {
+            {tasks.map((task, index) => {
                 const taskStartDate = new Date(task.planStartDate);
                 const taskEndDate = new Date(task.planEndDate);
                 const monthStart = dateArray[0];
                 const monthEnd = dateArray[dateArray.length - 1];
 
-                if (taskEndDate < monthStart || taskStartDate > monthEnd) {
-                    return null;
-                }
+                // Check if the task is visible in the current month range
+                const isTaskVisible = !(taskEndDate < monthStart || taskStartDate > monthEnd);
 
-                // 중간 달 날짜 포함 계산
+                // 디버깅 로그 추가
+                console.log(`Task ${task.title} (index ${index}) - isVisible: ${isTaskVisible}`);
+
                 const visibleStartDate = taskStartDate < monthStart ? monthStart : taskStartDate;
                 const visibleEndDate = taskEndDate > monthEnd ? monthEnd : taskEndDate;
 
                 const startDayIndex = Math.round((visibleStartDate - dateArray[0]) / (1000 * 60 * 60 * 24));
                 const endDayIndex = Math.round((visibleEndDate - dateArray[0]) / (1000 * 60 * 60 * 24));
 
-                // `endDayIndex`를 포함하도록 수정
                 const taskDuration = endDayIndex - startDayIndex + 1;
 
                 return (
                     <div key={task.id} className="gantt-task-row">
-                        <div
-                            className="gantt-task"
-                            style={{
-                                marginLeft: `${dayPositions.get(startDayIndex) || 0}px`,
-                                width: `${taskDuration * (dayPositions.get(1) - dayPositions.get(0))}px`,
-                            }}
-                        >
-                            <span className="gantt-task-title">{task.title}</span>
-                            {task.doRecords.map((doRecord) => {
-                                const doDate = new Date(doRecord.date);
-                                const doDayIndex = Math.round((doDate - dateArray[0]) / (1000 * 60 * 60 * 24));
-                                const doPositionRelativeToTask =
-                                    (doDayIndex - startDayIndex) * (dayPositions.get(1) - dayPositions.get(0));
-                                return (
-                                    <div
-                                        key={doRecord.id}
-                                        className="gantt-do"
-                                        style={{
-                                            left: `${doPositionRelativeToTask}px`,
-                                            width: `${dayPositions.get(1) - dayPositions.get(0)}px`,
-                                        }}
-                                    >
-                                        do
-                                    </div>
-                                );
-                            })}
-                        </div>
+                        {isTaskVisible ? (
+                            <div
+                                className="gantt-task"
+                                style={{
+                                    marginLeft: `${dayPositions.get(startDayIndex) || 0}px`,
+                                    width: `${taskDuration * (dayPositions.get(1) - dayPositions.get(0))}px`,
+                                }}
+                            >
+                                <span className="gantt-task-title">{task.title}</span>
+                                {task.doRecords.map((doRecord) => {
+                                    const doDate = new Date(doRecord.date);
+                                    const doDayIndex = Math.round((doDate - dateArray[0]) / (1000 * 60 * 60 * 24));
+                                    const doPositionRelativeToTask =
+                                        (doDayIndex - startDayIndex) * (dayPositions.get(1) - dayPositions.get(0));
+                                    return (
+                                        <div
+                                            key={doRecord.id}
+                                            className="gantt-do"
+                                            style={{
+                                                left: `${doPositionRelativeToTask}px`,
+                                                width: `${dayPositions.get(1) - dayPositions.get(0)}px`,
+                                            }}
+                                        >
+                                            do
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            // Render an empty placeholder to maintain the task order
+                            <div className="gantt-task-placeholder" style={{ height: "40px" }}></div>
+                        )}
                     </div>
                 );
             })}
