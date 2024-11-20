@@ -5,7 +5,7 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, 
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     useEffect(() => {
-        
+
     })
 
     const toggleDropdown = async (taskId) => {
