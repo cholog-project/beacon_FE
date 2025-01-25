@@ -65,6 +65,7 @@
 
 /* Do 표시 */
 .gantt-do {
+    margin-top: -5px;
     position: absolute;
     top: 5px; /* `gantt-day` 바로 아래로 위치 */
     height: 50px;

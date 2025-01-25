@@ -86,8 +86,8 @@ const Dashboard = () => {
 
     
     // Task 추가 페이지로 이동하는 함수
-    const handleAddTaskClick = () => {
-        navigate('/newTask');
+    const handleAddPlanClick = () => {
+        navigate('/newPlan');
     };
 
     // Do 추가 페이지로 이동하는 함수
@@ -95,17 +95,17 @@ const Dashboard = () => {
         navigate(`/newDo/${taskId}`);
     };
 
-    const handleDeleteTask = async (taskId) => {
+    const handleDeletePlan = async (projectId) => {
         try {
-            const response = await fetch(`${BASE_URL}/project/tasks/${taskId}`, {
+            const response = await fetch(`${BASE_URL}/plan/${projectId}`, {
                 method: 'DELETE',
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            setTasks(tasks.filter(task => task.id !== taskId));
+            setTasks(tasks.filter(task => task.id !== projectId));
         } catch (error) {
-            console.error('작업 삭제 중 오류 발생:', error);
+            console.error('Plan 삭제 중 오류 발생:', error);
         }
     };
 
@@ -139,9 +139,9 @@ const Dashboard = () => {
                 <TaskList
                     tasks={tasks}
                     onFetchDoRecords={fetchDoRecords} // Do 기록을 가져오는 함수 전달
-                    onAddTaskClick={handleAddTaskClick} // Task 추가 버튼 핸들러
+                    onAddPlanClick={handleAddPlanClick} // Task 추가 버튼 핸들러
                     onAddDoClick={handleAddDoClick}    // Do 추가 버튼 핸들러
-                    onDeleteTask={handleDeleteTask}   // Task 삭제 핸들러
+                    onDeletePlan={handleDeletePlan}   // Plan 삭제 핸들러
                     onDeleteDo={handleDeleteDo}   
                 />
             </div>

@@ -1,7 +1,7 @@
 import React, { useState, memo, useEffect } from 'react';
 import './TaskList.css';
 
-const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, onAddDoClick, onDeleteDo }) => {
+const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, onAddDoClick, onDeleteDo }) => {
     const [expandedTaskId, setExpandedTaskId] = useState(null);
 
     useEffect(() => {
@@ -29,13 +29,13 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddTaskClick, onDeleteTask, 
                 <div className="task-assignee">Assignee</div>
                 <div className="task-dates">Start - End</div>
                 <div className="task-description">Description</div>
-                <button className="add-button" onClick={onAddTaskClick}>+ Task 추가</button>
+                <button className="add-button" onClick={onAddPlanClick}>+ Plan 추가</button>
             </div>
 
             {tasks.map((task) => (
                 <React.Fragment key={task.id}>
                     <div className="task-row">
-                        <button className="delete-button" onClick={() => onDeleteTask(task.id)}>x</button>
+                        <button className="delete-button" onClick={() => onDeletePlan(task.id)}>x</button>
                         <div className="task-id">{task.id}</div>
                         <div className="task-title">{task.title}</div>
                         <div className="task-assignee">{task.assignee}</div>
