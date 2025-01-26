@@ -1,22 +1,17 @@
-import React, { useState, memo, useEffect } from 'react';
+import React, { useState, memo } from 'react';
 import './TaskList.css';
 
 const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, onAddDoClick, onDeleteDo }) => {
-    const [expandedTaskId, setExpandedTaskId] = useState(null);
+    const [expandedPlanId, setExpandedPlanId] = useState(null);
 
-    useEffect(() => {
-        
-    })
-
-    const toggleDropdown = async (taskId) => {
-        if (expandedTaskId === taskId) {
-            setExpandedTaskId(null); // 이미 열려있으면 닫기
+    const toggleDropdown = async (planId) => {
+        if (expandedPlanId === planId) {
+            setExpandedPlanId(null); // 닫기
         } else {
-            setExpandedTaskId(taskId);
-            const task = tasks.find(task => task.id === taskId);
-            if (task && task.doRecords.length === 0) {
-                // Do Records가 없는 경우 API 호출
-                await onFetchDoRecords(taskId);
+            setExpandedPlanId(planId);
+            const plan = tasks.find(plan => plan.id === planId);
+            if (plan && plan.doRecords.length === 0) {
+                await onFetchDoRecords(planId);
             }
         }
     };
@@ -28,55 +23,43 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, 
                 <div className="task-title">Title</div>
                 <div className="task-assignee">Assignee</div>
                 <div className="task-dates">Start - End</div>
+                <div className="task-status">Status</div>
                 <div className="task-description">Description</div>
                 <button className="add-button" onClick={onAddPlanClick}>+ Plan 추가</button>
             </div>
 
-            {tasks.map((task) => (
-                <React.Fragment key={task.id}>
+            {tasks.map((plan) => (
+                <React.Fragment key={plan.id}>
                     <div className="task-row">
-                        <button className="delete-button" onClick={() => onDeletePlan(task.id)}>x</button>
-                        <div className="task-id">{task.id}</div>
-                        <div className="task-title">{task.title}</div>
-                        <div className="task-assignee">{task.assignee}</div>
-                        <div className="task-dates">{task.taskStartDate} - {task.taskEndDate}</div>
-                        <div className="task-description">{task.description}</div>
-                        <button className="dropdown-button" onClick={() => toggleDropdown(task.id)}>
-                            {expandedTaskId === task.id ? '▲' : '▼'}
+                        <button className="delete-button" onClick={() => onDeletePlan(plan.id)}>x</button>
+                        <div className="task-id">{plan.id}</div>
+                        <div className="task-title">{plan.title}</div>
+                        <div className="task-assignee">{plan.assignee}</div>
+                        <div className="task-dates">{plan.startDate} - {plan.endDate}</div>
+                        <div className="task-status">{plan.status}</div>
+                        <div className="task-description">{plan.description}</div>
+                        <button className="dropdown-button" onClick={() => toggleDropdown(plan.id)}>
+                            {expandedPlanId === plan.id ? '▲' : '▼'}
                         </button>
                     </div>
 
                     {/* Dropdown content */}
-                    {expandedTaskId === task.id && (
+                    {expandedPlanId === plan.id && (
                         <div className="dropdown-content">
-                            <div className="plan-section">
-                                <h4>PLAN</h4>
-                                <p>{task.planStartDate} - {task.planEndDate}</p>
-                            </div>
                             <div className="do-section">
                                 <h4>DO Records</h4>
-                                {/* Do Records가 있는 경우 헤더 추가 */}
-                                {task.doRecords.length > 0 && (
-                                    <div className="do-records-header">
-                                        <span className="do-header-item">Date</span>
-                                        <span className="do-header-item">Status</span>
-                                        <span className="do-header-item">Description</span>
-                                    </div>
-                                )}
-                                {/* Do Records 출력 */}
-                                {task.doRecords.length > 0 ? (
-                                    task.doRecords.map((doRecord) => (
-                                        <div className="do-row">
+                                {plan.doRecords.length > 0 ? (
+                                    plan.doRecords.map((doRecord) => (
+                                        <div className="do-row" key={doRecord.id}>
                                             <button className="delete-button" onClick={() => onDeleteDo(doRecord.id)}>x</button>
                                             <div>{doRecord.date}</div>
-                                            <div>{doRecord.status}</div>
                                             <div>{doRecord.description}</div>
                                         </div>
                                     ))
                                 ) : (
                                     <p>No Do Records</p>
                                 )}
-                                <button className="add-button" onClick={() => onAddDoClick(task.id)}>+ Do 추가</button>
+                                <button className="add-button" onClick={() => onAddDoClick(plan.id)}>+ Do 추가</button>
                             </div>
                         </div>
                     )}

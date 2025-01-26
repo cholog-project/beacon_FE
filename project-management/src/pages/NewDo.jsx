@@ -29,21 +29,21 @@ const statusOptions = [
 
 function NewDo() {
     const [startDate, setStartDate] = useState("");
-    const [selectedStatus, setSelectedStatus] = useState("Start");
+    const [selectedStatus, setSelectedStatus] = useState("Not Started");
     const [description, setDescription] = useState("");
-    const taskId = useParams().taskId;
+    const { planId } = useParams(); // 컴포넌트 레벨에서 호출
     const navigate = useNavigate();
+
     // API 요청 함수
     const handleSubmit = async () => {
         const doData = {
             startDate: startDate,
             status: selectedStatus,
             description: description,
-            taskId: taskId,
         };
 
         try {
-            const response = await fetch(`${BASE_URL}/project/tasks/${taskId}/dos`, {
+            const response = await fetch(`${BASE_URL}/dos/new/${planId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -61,12 +61,11 @@ function NewDo() {
                 }, 500);
             } else {
                 // 요청 실패 시 처리
-                console.error("Failed to create do");
-                alert("Failed to create do");
+                throw new Error(`Failed to create Do: ${response.status}`);
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("Error creating do");
+            alert("Error creating Do");
         }
     };
 
@@ -85,7 +84,7 @@ function NewDo() {
             <Box
                 component="form"
                 sx={{
-                    "& .MuiTextField-root": { m: 1, width: "100%"},
+                    "& .MuiTextField-root": { m: 1, width: "100%" },
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center", // 폼 내부 항목 중앙 정렬
@@ -104,33 +103,33 @@ function NewDo() {
                 >
                     <h1 style={{ fontSize: "24px", fontWeight: "bold" }}>New Do</h1>
                 </div>
-                    <TextField
-                        id="do-start-date"
-                        label="DO Start date"
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        sx={{ width: "48%" }}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
+                <TextField
+                    id="do-start-date"
+                    label="DO Start date"
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    sx={{ width: "48%" }}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
 
-                    <TextField
-                        id="select-status"
-                        select
-                        label="Status"
-                        value={selectedStatus}
-                        onChange={(e) => setSelectedStatus(e.target.value)}
-                        fullWidth
-                        sx={{ marginBottom: "16px" }}
-                    >
-                        {statusOptions.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                <TextField
+                    id="select-status"
+                    select
+                    label="Status"
+                    value={selectedStatus}
+                    onChange={(e) => setSelectedStatus(e.target.value)}
+                    fullWidth
+                    sx={{ marginBottom: "16px" }}
+                >
+                    {statusOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
 
                 <Box sx={{ width: "100%", marginBottom: "16px" }}>
                     <FormControl fullWidth>
@@ -147,10 +146,20 @@ function NewDo() {
                     </FormControl>
                 </Box>
 
-                <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                    }}
+                >
                     <Button
                         variant="contained"
-                        sx={{ width: "48%", backgroundColor: "#007bff", color: "#fff" }}
+                        sx={{
+                            width: "48%",
+                            backgroundColor: "#007bff",
+                            color: "#fff",
+                        }}
                         onClick={handleSubmit}
                     >
                         Create
@@ -158,7 +167,7 @@ function NewDo() {
                     <Button
                         variant="outlined"
                         sx={{ width: "48%" }}
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate("/")}
                     >
                         Close
                     </Button>
