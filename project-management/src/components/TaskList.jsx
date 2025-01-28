@@ -48,6 +48,13 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, 
                         <div className="dropdown-content">
                             <div className="do-section">
                                 <h4>DO Records</h4>
+                                {/* Do Records가 있는 경우 헤더 추가 */}
+                                {plan.doRecords.length > 0 && (
+                                    <div className="do-records-header">
+                                        <span className="do-header-item">Date</span>
+                                        <span className="do-header-item">Description</span>
+                                    </div>
+                                )}
                                 {plan.doRecords.length > 0 ? (
                                     plan.doRecords.map((doRecord) => (
                                         <div className="do-row" key={doRecord.id}>
