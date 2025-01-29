@@ -1,15 +1,16 @@
+// Updated PlanList.jsx
 import React, { useState, memo } from 'react';
-import './TaskList.css';
+import './PlanList.css';
 
-const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, onAddDoClick, onDeleteDo }) => {
+const PlanList = memo(({ plans, onFetchDoRecords, onAddPlanClick, onDeletePlan, onAddDoClick, onDeleteDo }) => {
     const [expandedPlanId, setExpandedPlanId] = useState(null);
 
     const toggleDropdown = async (planId) => {
         if (expandedPlanId === planId) {
-            setExpandedPlanId(null); // 닫기
+            setExpandedPlanId(null); // Close
         } else {
             setExpandedPlanId(planId);
-            const plan = tasks.find(plan => plan.id === planId);
+            const plan = plans.find(plan => plan.id === planId);
             if (plan && plan.doRecords.length === 0) {
                 await onFetchDoRecords(planId);
             }
@@ -28,7 +29,7 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, 
                 <button className="add-button" onClick={onAddPlanClick}>+ Plan 추가</button>
             </div>
 
-            {tasks.map((plan) => (
+            {plans.map((plan) => (
                 <React.Fragment key={plan.id}>
                     <div className="task-row">
                         <button className="delete-button" onClick={() => onDeletePlan(plan.id)}>x</button>
@@ -43,12 +44,10 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, 
                         </button>
                     </div>
 
-                    {/* Dropdown content */}
                     {expandedPlanId === plan.id && (
                         <div className="dropdown-content">
                             <div className="do-section">
                                 <h4>DO Records</h4>
-                                {/* Do Records가 있는 경우 헤더 추가 */}
                                 {plan.doRecords.length > 0 && (
                                     <div className="do-records-header">
                                         <span className="do-header-item">Date</span>
@@ -76,4 +75,4 @@ const TaskList = memo(({ tasks, onFetchDoRecords, onAddPlanClick, onDeletePlan, 
     );
 });
 
-export default TaskList;
+export default PlanList;

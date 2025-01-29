@@ -1,15 +1,15 @@
+// Updated Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import TaskList from '../components/TaskList';
+import PlanList from '../components/PlanList';
 import GanttChart from '../components/GanttChart';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from "../constant/index.tsx";
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [plans, setPlans] = useState([]); // Plan 목록
+    const [plans, setPlans] = useState([]);
     const [teamMembers, setTeamMembers] = useState([]);
 
-    // 팀 멤버를 가져오는 useEffect
     useEffect(() => {
         const fetchTeamMembers = async () => {
             try {
@@ -26,7 +26,6 @@ const Dashboard = () => {
         fetchTeamMembers();
     }, []);
 
-    // Plan 목록을 API에서 가져오는 함수
     useEffect(() => {
         const fetchPlans = async () => {
             try {
@@ -49,7 +48,6 @@ const Dashboard = () => {
 
                 setPlans(formattedPlans);
 
-                // 각 Plan에 대한 Do 데이터 가져오기
                 data.content.forEach((plan) => fetchDoRecords(plan.id));
             } catch (error) {
                 console.error('Plan 데이터를 가져오는 중 오류 발생:', error);
@@ -58,7 +56,6 @@ const Dashboard = () => {
         if (teamMembers.length > 0) fetchPlans();
     }, [teamMembers]);
 
-    // Do 기록을 API에서 가져오는 함수
     const fetchDoRecords = async (planId) => {
         try {
             const response = await fetch(`${BASE_URL}/dos/plan/${planId}`);
@@ -78,17 +75,14 @@ const Dashboard = () => {
         }
     };
 
-    // Plan 추가 페이지로 이동
     const handleAddPlanClick = () => {
         navigate('/newPlan');
     };
 
-    // Do 추가 페이지로 이동
     const handleAddDoClick = (planId) => {
         navigate(`/newDo/${planId}`);
     };
 
-    // Plan 삭제
     const handleDeletePlan = async (planId) => {
         try {
             const response = await fetch(`${BASE_URL}/plan/${planId}`, {
@@ -103,7 +97,6 @@ const Dashboard = () => {
         }
     };
 
-    // Do 삭제
     const handleDeleteDo = async (doId) => {
         try {
             const response = await fetch(`${BASE_URL}/dos/${doId}`, {
@@ -127,8 +120,8 @@ const Dashboard = () => {
     return (
         <div style={{ display: 'flex' }}>
             <div style={{ width: '40%' }}>
-                <TaskList
-                    tasks={plans} // Plan 데이터를 TaskList로 전달
+                <PlanList
+                    plans={plans}
                     onFetchDoRecords={fetchDoRecords}
                     onAddPlanClick={handleAddPlanClick}
                     onAddDoClick={handleAddDoClick}
@@ -137,7 +130,7 @@ const Dashboard = () => {
                 />
             </div>
             <div style={{ width: '60%' }}>
-                <GanttChart tasks={plans} /> {/* GanttChart도 Plan 데이터 사용 */}
+                <GanttChart plans={plans} />
             </div>
         </div>
     );
