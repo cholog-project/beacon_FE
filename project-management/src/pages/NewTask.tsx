@@ -10,7 +10,7 @@ import {
 
 import { useState, useEffect } from "react";
 import { BASE_URL } from "../constant/index.tsx";
-import { TeamMember } from '../types/team';
+import { TeamMember } from '../types/team.ts';
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 

@@ -3,23 +3,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%; /* 전체 너비를 100%로 설정 */
-    margin: 0; /* 불필요한 여백 제거 */
-    overflow-x: auto; /* 가로 스크롤 가능하게 설정 */
+    width: 100%;
+    margin: 0;
+    overflow-x: auto; /* 가로 스크롤 가능 */
     overflow-y: hidden;
 }
 
-/* 헤더 - 날짜 범위, 월, 일자 표시 */
+/* 날짜 헤더 */
 .gantt-header {
     display: flex;
-    flex-direction: column; /* 세로로 정렬하여 각 섹션 배치 */
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    padding-bottom: 5px; /* 아래쪽에 패딩 추가 */
-    box-sizing: border-box;
-    min-height: 90px; /* 최소 높이를 설정하여 내부 요소들이 모두 보이도록 함 */
+    border-bottom: 1px solid #ccc;
 }
 
-/* 날짜 범위 이동 버튼 */
+/* 날짜 이동 버튼 */
 .gantt-controls {
     display: flex;
     justify-content: space-between;
@@ -27,11 +26,26 @@
     padding: 5px 0;
 }
 
+.gantt-controls button {
+    background-color: white; /* 원래는 투명한 버튼 */
+    color: black;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.gantt-controls button:hover {
+    background-color: #f0f0f0; /* 약간 회색 */
+}
+
 /* 월 표시 */
 .gantt-header-month {
     font-weight: bold;
+    font-size: 16px;
     text-align: center;
     margin: 5px 0;
+    color: black; /* 원래는 진한 검정 */
 }
 
 /* 날짜 표시 칸 */
@@ -40,59 +54,68 @@
     font-weight: bold;
     align-items: center;
     white-space: nowrap;
-    width: 100%; /* 차트 너비 100%로 설정 */
-    margin: 0; /* 상하 마진 제거 */
-    padding-top: 5px; /* 날짜 텍스트의 위쪽 여백을 확보 */
-    border-bottom: 1px solid #ddd; /* 헤더의 하단 경계선 추가 */
+    width: 100%;
+    padding-top: 5px;
 }
 
-/* 각 날짜 칸 스타일 */
+/* 날짜 칸 스타일 */
 .gantt-day {
     text-align: center;
-    border-right: 1px solid #ddd; /* 칸 간의 경계선 */
+    border-right: 1px solid #ddd;
     background-color: white;
-    padding: 5px 0; /* 날짜 간격 조정을 위한 패딩 추가 */
+    padding: 5px 0;
     box-sizing: border-box;
-    width: calc(100% / 31); /* 각 날짜 칸 너비를 정확히 31등분 */
+    width: calc(100% / 31); /* 31일 기준 */
+    color: black; /* 날짜는 검정 */
 }
 
+/* 각 Plan의 행 */
+.gantt-task-row {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    box-sizing: border-box;
+}
 
 /* Plan 막대 */
 .gantt-task {
     display: flex;
     align-items: center;
-    justify-content: center; /* 중앙 정렬 */
+    justify-content: center;
     height: 50px;
-    background-color: rgba(140, 187, 242, 0.8);
-    opacity: 0.3;
+    background-color: rgba(140, 187, 242, 0.3); /* 원래 약간 투명한 파란색 */
     border-radius: 5px;
-    text-align: center;
-    color: white;
+    color: black;
     font-size: 14px;
     font-weight: 700;
     position: relative;
-    margin: 0; /* 불필요한 마진 제거 */
+    margin: 0;
     box-sizing: border-box;
 }
 
-/* Task 제목 */
+/* Plan 제목 */
 .gantt-task-title {
     color: black;
     font-weight: bold;
 }
 
-/* Do 표시 */
+/* Do 기록 (작은 점 형태) */
 .gantt-do {
     position: absolute;
-    top: 5px; /* `gantt-day` 바로 아래로 위치 */
+    top: 0px;
     height: 50px;
-    width: calc(100% / 31); /* 날짜 칸과 같은 너비 */
-    background-color: black;
+    width: calc(100% / 31);
+    background-color: rgba(0, 0, 0, 0.8); /* 원래 진한 검정 */
     border-radius: 5px;
-    color: white;
+    color: white; /* 흰 글씨 */
     text-align: center;
     font-size: 14px;
     font-weight: 700;
     line-height: 50px;
-    margin-top: -5px;
+}
+
+/* Plan이 없는 경우 자리 유지 */
+.gantt-task-placeholder {
+    height: 40px;
+    background-color: rgba(230, 230, 230, 0.5); /* 회색 */
 }
