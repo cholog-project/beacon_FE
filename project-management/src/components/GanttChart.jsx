@@ -1,12 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import "./GanttChart.css";
 
-// 날짜 차이를 계산하는 함수 (일수 차이)
 const getDaysBetweenDates = (startDate, endDate) => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const diffTime = end - start;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // 마지막 날 포함
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
     return diffDays;
 };
 
@@ -15,13 +14,9 @@ const GanttChart = ({ plans = [] }) => {
     const chartRef = useRef(null);
     const [dayPositions, setDayPositions] = useState(new Map());
 
-    // 달 이동
+    // 달 이동 함수
     const shiftDateRange = (months) => {
-        const newStartDate = new Date(
-            startDate.getFullYear(),
-            startDate.getMonth() + months,
-            1
-        );
+        const newStartDate = new Date(startDate.getFullYear(), startDate.getMonth() + months, 1);
         setStartDate(newStartDate);
     };
 
@@ -39,23 +34,21 @@ const GanttChart = ({ plans = [] }) => {
 
     const dateArray = generateCurrentMonthDateArray(startDate);
 
-    useEffect(() => {
+    // 위치 계산을 위한 useLayoutEffect
+    useLayoutEffect(() => {
         if (chartRef.current) {
             const newPositions = new Map();
             const chartLeft = chartRef.current.getBoundingClientRect().left;
 
-            Array.from(chartRef.current.querySelectorAll(".gantt-day")).forEach(
-                (day, index) => {
-                    const positionLeft = day.getBoundingClientRect().left - chartLeft;
-                    newPositions.set(index, positionLeft);
-                }
-            );
+            Array.from(chartRef.current.querySelectorAll(".gantt-day")).forEach((day, index) => {
+                const positionLeft = day.getBoundingClientRect().left - chartLeft;
+                newPositions.set(index, positionLeft);
+            });
 
             setDayPositions(newPositions);
         }
-    }, [chartRef, dateArray.length]);
+    }, [dateArray.length, plans]);
 
-    // ✅ `plans`가 비어 있을 경우 예외 처리
     if (!plans || plans.length === 0) {
         return <div className="gantt-loading">Loading Gantt Chart...</div>;
     }
@@ -82,16 +75,16 @@ const GanttChart = ({ plans = [] }) => {
 
             {/* 각 Plan의 간트 차트 */}
             {plans.map((plan) => {
-                const startDate = new Date(plan.startDate);
-                const endDate = new Date(plan.endDate);
+                const planStartDate = new Date(plan.startDate);
+                const planEndDate = new Date(plan.endDate);
                 const monthStart = dateArray[0];
                 const monthEnd = dateArray[dateArray.length - 1];
 
-                // Plan이 현재 월에 보이는지 여부
-                const isPlanVisible = !(endDate < monthStart || startDate > monthEnd);
+                // Plan이 현재 월에 보이는지 확인
+                const isPlanVisible = !(planEndDate < monthStart || planStartDate > monthEnd);
 
-                const visibleStartDate = startDate < monthStart ? monthStart : startDate;
-                const visibleEndDate = endDate > monthEnd ? monthEnd : endDate;
+                const visibleStartDate = planStartDate < monthStart ? monthStart : planStartDate;
+                const visibleEndDate = planEndDate > monthEnd ? monthEnd : planEndDate;
 
                 const startDayIndex = Math.round((visibleStartDate - dateArray[0]) / (1000 * 60 * 60 * 24));
                 const endDayIndex = Math.round((visibleEndDate - dateArray[0]) / (1000 * 60 * 60 * 24));
@@ -109,7 +102,7 @@ const GanttChart = ({ plans = [] }) => {
                             >
                                 <span className="gantt-task-title">{plan.title}</span>
 
-                                {/* Do 표시 */}
+                                {/* 각 Do 기록 표시 */}
                                 {plan.doRecords.map((doRecord) => {
                                     const doDate = new Date(doRecord.date);
                                     const doDayIndex = Math.round((doDate - dateArray[0]) / (1000 * 60 * 60 * 24));

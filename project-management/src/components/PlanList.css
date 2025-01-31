@@ -21,7 +21,7 @@
     align-items: center;
     box-sizing: border-box;
     border-bottom: 1px solid #ccc;
-    height: 50px; /* 높이 통일 */
+    height: 70px; /* 높이 통일 */
 }
 
 /* Task 한 행의 스타일 */
