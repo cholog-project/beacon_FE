@@ -3,7 +3,7 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-      - feature/36-add-github-actions
+      - feature/36-add-github-actions  # 테스트할 브랜치
 
 jobs:
   build:
@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: project-management/package-lock.json
 
       - name: Install dependencies
         run: npm install
@@ -35,7 +36,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build  # 빌드 완료 후 실행
+    needs: build
 
     steps:
       - name: Checkout source code
@@ -48,20 +49,14 @@ jobs:
           chmod 600 ~/.ssh/frontend_key.pem
           ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Server
+      - name: Deploy application
         run: |
-          ssh -i ~/.ssh/frontend_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} <<EOF
+          ssh -i ~/.ssh/frontend_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} <<EOF
             cd /home/ubuntu/beacon_FE/project-management
             git pull origin main
+            sudo fuser -k 3000/tcp || true
             npm install
             npm run build
-
-            echo "3000번 포트의 기존 프로세스 종료"
-            sudo fuser -k 3000/tcp || true
-
-            echo "PM2 애플리케이션 재시작"
             pm2 restart react-app || pm2 start npm --name "react-app" -- start
-
-            echo "Nginx 설정 반영 및 재시작"
             sudo nginx -t && sudo systemctl reload nginx
           EOF
