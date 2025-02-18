@@ -1,0 +1,67 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push될 때 실행
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: project-management
+
+      - name: Build project
+        run: npm run build
+        working-directory: project-management
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: project-management/build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # 빌드 완료 후 실행
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Configure SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SERVER_PEM_KEY }}" > ~/.ssh/frontend_key.pem
+          chmod 600 ~/.ssh/frontend_key.pem
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Server
+        run: |
+          ssh -i ~/.ssh/frontend_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} <<EOF
+            cd /home/ubuntu/beacon_FE/project-management
+            git pull origin main
+            npm install
+            npm run build
+
+            echo "3000번 포트의 기존 프로세스 종료"
+            sudo fuser -k 3000/tcp || true
+
+            echo "PM2 애플리케이션 재시작"
+            pm2 restart react-app || pm2 start npm --name "react-app" -- start
+
+            echo "Nginx 설정 반영 및 재시작"
+            sudo nginx -t && sudo systemctl reload nginx
+          EOF
