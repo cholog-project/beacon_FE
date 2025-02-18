@@ -3,7 +3,7 @@ name: beacon_FE CI/CD
 on:
   push:
     branches:
-      - feature/36-add-github-actions  # 테스트할 브랜치
+      - main  # 테스트할 브랜치
 
 jobs:
   build:
