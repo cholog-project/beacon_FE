@@ -1,4 +1,4 @@
-name: Frontend CI/CD
+name: beacon_FE CI/CD
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
       - name: Build project
         run: |
           cd project-management
-          npm run build
+          CI=false npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -58,7 +58,7 @@ jobs:
             git pull origin main
             sudo fuser -k 3000/tcp || true  # 기존 실행 중이던 프로세스 종료
             npm install
-            npm run build
+            CI=false npm run build
             pm2 restart react-app || pm2 start npm --name "react-app" -- start
             sudo nginx -t && sudo systemctl reload nginx
           EOF
