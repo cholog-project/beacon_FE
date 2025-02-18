@@ -3,7 +3,7 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-      - main  # main 브랜치에 push될 때 실행
+      - feature/36-add-github-actions
 
 jobs:
   build:
