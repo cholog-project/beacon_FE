@@ -21,12 +21,14 @@ jobs:
           cache-dependency-path: project-management/package-lock.json
 
       - name: Install dependencies
-        run: npm install
-        working-directory: project-management
+        run: |
+          cd project-management
+          npm install
 
       - name: Build project
-        run: npm run build
-        working-directory: project-management
+        run: |
+          cd project-management
+          npm run build
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -54,7 +56,7 @@ jobs:
           ssh -i ~/.ssh/frontend_key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.SERVER_IP }} <<EOF
             cd /home/ubuntu/beacon_FE/project-management
             git pull origin main
-            sudo fuser -k 3000/tcp || true
+            sudo fuser -k 3000/tcp || true  # 기존 실행 중이던 프로세스 종료
             npm install
             npm run build
             pm2 restart react-app || pm2 start npm --name "react-app" -- start
