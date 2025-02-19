@@ -14,12 +14,12 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 const statusOptions = [
     {
-        value: "Not Started",
-        label: "Not Started",
+        value: "Not_Started",
+        label: "Not_Started",
     },
     {
-        value: "In Progress",
-        label: "In Progress",
+        value: "In_Progress",
+        label: "In_Progress",
     },
     {
         value: "Completed",
